@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import com.carlyu.chat.ui.components.ScaffoldLayout
 import com.carlyu.chat.ui.theme.ChatdemoTheme
 
-private const val TAG = "MainActivity"
 
+private const val TAG = "MainActivity"
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
@@ -33,4 +33,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
