@@ -1,5 +1,7 @@
 package com.carlyu.chat.ui.screens.views
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.carlyu.chat.ui.components.AppIcons
 import com.carlyu.chat.ui.components.SettingsItems.SettingsItemSwitch
@@ -21,6 +24,10 @@ import com.carlyu.chat.viewmodels.SettingsViewModel
 
 @Composable
 fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
+    val context = LocalContext.current
+    BackHandler {
+        (context as? Activity)?.moveTaskToBack(true)
+    }
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
             Column(modifier = Modifier.fillMaxWidth()) {

@@ -11,7 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlyu.chat.models.ChatListSingleData
 import java.text.SimpleDateFormat
@@ -21,9 +21,9 @@ import kotlin.random.Random
 @Composable
 @Preview
 fun HomeScreen() {
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
     BackHandler {
-        (lifecycleOwner as? Activity)?.finish()
+        (context as? Activity)?.moveTaskToBack(true)
     }
     val messages = mutableListOf<ChatListSingleData>().apply {
         repeat(15) {
