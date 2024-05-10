@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +37,7 @@ fun ScaffoldLayout() {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val navController: NavHostController = rememberNavController()
-    val settingsViewModel = remember { SettingsViewModel(context) }
+    val settingsViewModel: SettingsViewModel = hiltViewModel()
     val navigationGraph = NavigationGraphs(navController, settingsViewModel)
 
     val buttonsVisible = remember { mutableStateOf(true) }
@@ -90,16 +92,17 @@ fun BottomBar(
                     Text(text = screen.title!!)
                 },
                 icon = {
-                    Icon(imageVector = screen.icon!!, contentDescription = "")
+                    Icon(imageVector = screen.icon!!, contentDescription = "Test")
                 },
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-/*                        popUpTo(navController.graph.findStartDestination().id) {
+
+                        popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
-                        }*/
-                        //launchSingleTop = true
-                        //restoreState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 },
             )

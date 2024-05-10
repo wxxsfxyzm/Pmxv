@@ -10,11 +10,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
+        android:windowSoftInputMode="adjustResize"
+        android:name=".ChatApplication"
         android:theme="@style/Theme.Chatdemo">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.screens.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:theme="@style/Theme.Chatdemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

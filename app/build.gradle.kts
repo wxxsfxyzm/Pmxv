@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -41,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -50,18 +51,24 @@ android {
     }
 }
 
-dependencies {
+configurations.all {
+    resolutionStrategy.eachDependency {
+        when {
+            requested.name == "javapoet" -> useVersion("1.13.0")
+        }
+    }
+}
 
+dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.datastore.core.android)
+    implementation(libs.androidx.datastore.preferences)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,9 +76,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    // Optional - Included automatically by material, only add when you need
-    // the icons but not the material library (e.g. when using Material3 or a
-    // custom design system based on Foundation)
+
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.core)
     // Optional - Add full set of material icons
     implementation(libs.androidx.material.icons.extended)
@@ -80,13 +86,24 @@ dependencies {
 
 
     // Optional - Integration with ViewModels
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
     // Optional - Integration with RxJava
     //implementation(libs.androidx.compose.runtime.rxjava2)
 
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.androidCompiler)
+
+    implementation(libs.hilt.extCompose)
+    ksp(libs.hilt.extCompiler)
+
+
+    // Room
     ksp(libs.room.compiler)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+
 }

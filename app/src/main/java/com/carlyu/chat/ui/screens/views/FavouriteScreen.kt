@@ -1,6 +1,5 @@
-package com.carlyu.chat.views
+package com.carlyu.chat.ui.screens.views
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -17,7 +16,6 @@ fun FavouriteScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Magenta)
             .wrapContentSize(Alignment.Center)
     ) {
         Text(

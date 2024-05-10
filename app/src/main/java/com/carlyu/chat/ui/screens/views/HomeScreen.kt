@@ -1,5 +1,7 @@
-package com.carlyu.chat.views
+package com.carlyu.chat.ui.screens.views
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -9,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlyu.chat.models.ChatListSingleData
 import java.text.SimpleDateFormat
@@ -18,6 +21,10 @@ import kotlin.random.Random
 @Composable
 @Preview
 fun HomeScreen() {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    BackHandler {
+        (lifecycleOwner as? Activity)?.finish()
+    }
     val messages = mutableListOf<ChatListSingleData>().apply {
         repeat(15) {
             add(
@@ -59,6 +66,7 @@ fun ChatMessageList(messages: List<ChatListSingleData>) {
 
 @Composable
 fun ChatMessageItem(message: ChatListSingleData) {
+
     // 在这里显示你的聊天消息
     // 例如，你可以使用Text组件来显示消息的内容
     ListItem(

@@ -5,10 +5,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.carlyu.chat.ui.screens.views.FavouriteScreen
+import com.carlyu.chat.ui.screens.views.HomeScreen
+import com.carlyu.chat.ui.screens.views.PreferenceScreen
 import com.carlyu.chat.viewmodels.SettingsViewModel
-import com.carlyu.chat.views.FavouriteScreen
-import com.carlyu.chat.views.HomeScreen
-import com.carlyu.chat.views.PreferenceScreen
 
 class NavigationGraphs(
     private val navController: NavHostController,
