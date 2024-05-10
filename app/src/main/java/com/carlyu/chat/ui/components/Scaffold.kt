@@ -107,15 +107,5 @@ fun BottomBar(
                 },
             )
         }
-
-//        items.forEach { item ->
-//            NavigationBarItem(
-//                icon = { Icon(item.icon, contentDescription = null) },
-//                label = { Text(item.label) },
-//                selected = item == selectedItem.value,
-//                onClick = { selectedItem.value = item }
-//            )
-//        }
-
     }
 }

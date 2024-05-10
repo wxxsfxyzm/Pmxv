@@ -69,7 +69,7 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     modifier = Modifier.padding(16.dp)
                 )
                 SettingsItemSwitch(
-                    icon = AppIcons.Infos,
+                    icon = AppIcons.Palette,
                     title = "Use Dynamic Colors",
                     subtitle = "Toggle On To Use Dynamic Colors",
                     checked = settingsViewModel.useDynamicColor.value,
