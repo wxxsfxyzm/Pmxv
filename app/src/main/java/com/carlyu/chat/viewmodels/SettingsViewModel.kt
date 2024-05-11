@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.carlyu.chat.models.data.BottomSheetContent
 import com.carlyu.chat.models.data.ThemeStyleType
 import com.carlyu.chat.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,10 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
+    // BottomSheet
+    val bottomSheetState = mutableStateOf(false)
+    val bottomSheetContent = mutableStateOf<BottomSheetContent?>(null)
+
     // switchValue
     val switchState1 = mutableStateOf(sharedPreferences.getBoolean("switch_state_1", false))
     val switchState2 = mutableStateOf(sharedPreferences.getBoolean("switch_state_2", false))

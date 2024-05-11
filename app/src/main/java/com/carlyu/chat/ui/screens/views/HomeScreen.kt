@@ -1,7 +1,5 @@
 package com.carlyu.chat.ui.screens.views
 
-import android.app.Activity
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -22,9 +20,6 @@ import kotlin.random.Random
 @Preview
 fun HomeScreen() {
     val context = LocalContext.current
-    BackHandler {
-        (context as? Activity)?.moveTaskToBack(true)
-    }
     val messages = mutableListOf<ChatListSingleData>().apply {
         repeat(15) {
             add(

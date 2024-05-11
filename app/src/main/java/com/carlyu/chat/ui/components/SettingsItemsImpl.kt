@@ -35,13 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.carlyu.chat.models.data.ThemeStyleType
 
-object SettingsItems {
+object SettingsItemsImpl {
     @Composable
     fun SettingsNormalItems(
         icon: ImageVector,
         title: String,
         subtitle: String,
-        onClick: () -> Unit?
+        onClick: () -> Unit
     ) {
         val context = LocalContext.current
         val vibrator = context.getSystemService(Vibrator::class.java)
@@ -215,7 +215,7 @@ object SettingsItems {
                             leadingIcon = {
                                 Icon(
                                     modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                    imageVector = AppIcons.LightMode,
+                                    imageVector = AppIconsImpl.LightMode,
                                     contentDescription = null
                                 )
                             }
@@ -231,7 +231,7 @@ object SettingsItems {
                             leadingIcon = {
                                 Icon(
                                     modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                    imageVector = AppIcons.DarkMode,
+                                    imageVector = AppIconsImpl.DarkMode,
                                     contentDescription = null
                                 )
                             }
@@ -248,7 +248,7 @@ object SettingsItems {
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                imageVector = AppIcons.Android,
+                                imageVector = AppIconsImpl.Android,
                                 contentDescription = null
                             )
                         }

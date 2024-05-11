@@ -8,7 +8,7 @@ import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Settings
 
-object AppIcons {
+object AppIconsImpl {
     val Android = Icons.Default.Android
     val Settings = Icons.Default.Settings
 

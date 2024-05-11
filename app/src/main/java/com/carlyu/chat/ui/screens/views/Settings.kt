@@ -16,17 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.carlyu.chat.ui.components.AppIcons
-import com.carlyu.chat.ui.components.SettingsItems.SettingsItemSwitch
-import com.carlyu.chat.ui.components.SettingsItems.SettingsNormalItems
-import com.carlyu.chat.ui.components.SettingsItems.ThemeStyleSection
+import com.carlyu.chat.models.data.BottomSheetContent
+import com.carlyu.chat.ui.components.AppIconsImpl
+import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsItemSwitch
+import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsNormalItems
+import com.carlyu.chat.ui.components.SettingsItemsImpl.ThemeStyleSection
 import com.carlyu.chat.viewmodels.SettingsViewModel
 
 @Composable
 fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
     val context = LocalContext.current
     BackHandler {
-        (context as? Activity)?.moveTaskToBack(true)
+        (context as Activity).finish()
     }
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
@@ -52,7 +53,7 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     onCheckedChange = settingsViewModel::onSwitchChange2
                 )
                 SettingsItemSwitch(
-                    icon = AppIcons.Settings,
+                    icon = AppIconsImpl.Settings,
                     title = "Test Switch 3",
                     subtitle = "This is a test switch",
                     checked = settingsViewModel.switchState3.value,
@@ -69,7 +70,7 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     modifier = Modifier.padding(16.dp)
                 )
                 SettingsItemSwitch(
-                    icon = AppIcons.Palette,
+                    icon = AppIconsImpl.Palette,
                     title = "Use Dynamic Colors",
                     subtitle = "Toggle On To Use Dynamic Colors",
                     checked = settingsViewModel.useDynamicColor.value,
@@ -92,7 +93,7 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     modifier = Modifier.padding(16.dp)
                 )
                 SettingsNormalItems(
-                    icon = AppIcons.Infos,
+                    icon = AppIconsImpl.Infos,
                     title = "About",
                     subtitle = "0.0.1",
                     onClick = {}
@@ -102,7 +103,8 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     title = "Check For Updates",
                     subtitle = "Get the latest version of the app",
                     onClick = {
-
+                        settingsViewModel.bottomSheetState.value = true
+                        settingsViewModel.bottomSheetContent.value = BottomSheetContent.CheckUpdates
                     }
                 )
             }

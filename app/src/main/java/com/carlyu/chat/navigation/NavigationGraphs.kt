@@ -12,7 +12,7 @@ import com.carlyu.chat.viewmodels.SettingsViewModel
 
 class NavigationGraphs(
     private val navController: NavHostController,
-    private val settingsViewModel: SettingsViewModel
+    private val settingsViewModel: SettingsViewModel,
 ) {
 
     @OptIn(ExperimentalComposeUiApi::class)
