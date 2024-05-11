@@ -2,9 +2,11 @@ package com.carlyu.chat.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.carlyu.chat.models.data.ThemeStyleType
+import com.carlyu.chat.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -15,18 +17,40 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
-    // TODO: Implement the ViewModel
-    val switchState = mutableStateOf(sharedPreferences.getBoolean("switch_state", false))
+    // switchValue
+    val switchState1 = mutableStateOf(sharedPreferences.getBoolean("switch_state_1", false))
+    val switchState2 = mutableStateOf(sharedPreferences.getBoolean("switch_state_2", false))
+    val switchState3 = mutableStateOf(sharedPreferences.getBoolean("switch_state_3", false))
 
+    // UI Control Variables
     val uiMode = mutableStateOf(getThemeSetting()) // 添加这一行
     val useDynamicColor = mutableStateOf(sharedPreferences.getBoolean("dynamic_color", false))
 
-    fun onSwitchChange(newState: Boolean) {
-        switchState.value = newState
+    fun onSwitchChange1(newState: Boolean) {
+        switchState1.value = newState
         with(sharedPreferences.edit()) {
-            putBoolean("switch_state", newState)
+            putBoolean("switch_state_1", newState)
             apply()
         }
+        ToastUtils.showToast(context, "Switch 1 state is $newState")
+    }
+
+    fun onSwitchChange2(newState: Boolean) {
+        switchState2.value = newState
+        with(sharedPreferences.edit()) {
+            putBoolean("switch_state_2", newState)
+            apply()
+        }
+        Toast.makeText(context, "Switch 2 state is $newState", Toast.LENGTH_SHORT).show()
+    }
+
+    fun onSwitchChange3(newState: Boolean) {
+        switchState3.value = newState
+        with(sharedPreferences.edit()) {
+            putBoolean("switch_state_3", newState)
+            apply()
+        }
+        Toast.makeText(context, "Switch 3 state is $newState", Toast.LENGTH_SHORT).show()
     }
 
     fun toggleDynamicColor(newState: Boolean) {

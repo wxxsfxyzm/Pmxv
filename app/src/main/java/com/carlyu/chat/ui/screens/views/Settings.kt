@@ -41,22 +41,22 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     icon = Icons.Default.Settings,
                     title = "Test Switch 1",
                     subtitle = "This is a test switch",
-                    checked = settingsViewModel.switchState.value,
-                    onCheckedChange = settingsViewModel::onSwitchChange
+                    checked = settingsViewModel.switchState1.value,
+                    onCheckedChange = settingsViewModel::onSwitchChange1
                 )
                 SettingsItemSwitch(
                     icon = Icons.Default.Settings,
                     title = "Test Switch 2",
                     subtitle = "This is a test switch",
-                    checked = settingsViewModel.switchState.value,
-                    onCheckedChange = settingsViewModel::onSwitchChange
+                    checked = settingsViewModel.switchState2.value,
+                    onCheckedChange = settingsViewModel::onSwitchChange2
                 )
                 SettingsItemSwitch(
                     icon = AppIcons.Settings,
                     title = "Test Switch 3",
                     subtitle = "This is a test switch",
-                    checked = settingsViewModel.switchState.value,
-                    onCheckedChange = settingsViewModel::onSwitchChange
+                    checked = settingsViewModel.switchState3.value,
+                    onCheckedChange = settingsViewModel::onSwitchChange3
                 )
             }
         }

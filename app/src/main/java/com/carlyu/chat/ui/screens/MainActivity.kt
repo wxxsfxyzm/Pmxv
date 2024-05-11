@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         // 调用 PreferenceUtils.clearUnusedSharedPreferences 方法
-        val keys = listOf("")
+        val keys = listOf("switch_state")
         PreferenceUtils.clearUnusedSharedPreferences(this, keys)
 
         setContent {
