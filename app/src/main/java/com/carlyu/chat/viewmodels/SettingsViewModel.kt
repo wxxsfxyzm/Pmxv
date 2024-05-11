@@ -15,10 +15,9 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
-
-    // lateinit var isUiModeDark: MutableState<String?>
-
+    // TODO: Implement the ViewModel
     val switchState = mutableStateOf(sharedPreferences.getBoolean("switch_state", false))
+
     val uiMode = mutableStateOf(getThemeSetting()) // 添加这一行
     val useDynamicColor = mutableStateOf(sharedPreferences.getBoolean("dynamic_color", false))
 
@@ -36,7 +35,6 @@ class SettingsViewModel @Inject constructor(
             putBoolean("dynamic_color", newState)
             apply()
         }
-
     }
 
     fun changeThemeStyle(theme: ThemeStyleType) {
@@ -47,9 +45,6 @@ class SettingsViewModel @Inject constructor(
         uiMode.value = theme
     }
 
-    private fun getDynamicColorSetting(): Boolean {
-        return sharedPreferences.getBoolean("dynamic_color", false)
-    }
 
     private fun getThemeSetting(): ThemeStyleType {
         val themeString =

@@ -37,20 +37,6 @@ fun HomeScreen() {
             )
         }
     }
-    /*    Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.DarkGray)
-                .wrapContentSize(Alignment.Center)
-        ) {
-            Text(
-                text = "Home Screen",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.White,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center,
-            )
-        }*/
     // 显示聊天消息的列表
     ChatMessageList(messages = messages)
 }
