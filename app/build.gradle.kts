@@ -92,8 +92,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    // Optional - Integration with RxJava
-    //implementation(libs.androidx.compose.runtime.rxjava2)
+    // Retrofit 2
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // Hilt
     implementation(libs.hilt.android)
