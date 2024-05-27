@@ -21,9 +21,11 @@ The next steps for this project are:
 - Connect with the server API.
 - Establish a complete front-end and back-end communication.
 
-## Caution
+## Getting Started
 
 - This client does not use official library Google prepared for Android.
+    - For reasons: Gemini does not offer service in my region, so I have to use a private server to
+      access the API.
 - You need a server to use this client. The server is not provided in this project.
     - [My server](https://github.com/wxxsfxyzm/API_Backend) has been working in progress
 - For a server implementation, please refer to
@@ -38,10 +40,6 @@ The next steps for this project are:
 ## Authors
 
 - [wxxsfxyzm](https://github.com/wxxsfxyzm) - Initial work
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
