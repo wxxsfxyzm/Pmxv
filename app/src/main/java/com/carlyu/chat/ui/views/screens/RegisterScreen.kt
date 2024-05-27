@@ -21,9 +21,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onRegister: () -> Unit) {
+fun RegisterScreen(onRegisterSuccess: () -> Unit, onCancel: () -> Unit) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -46,19 +47,27 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onRegister: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation()
         )
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation()
+        )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            // 模拟登录成功
-            onLoginSuccess()
+            // 处理注册成功
+            onRegisterSuccess()
         }) {
-            Text("Login")
+            Text("Register")
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            // 处理注册逻辑
-            onRegister()
+            // 处理取消注册，返回登录页面
+            onCancel()
         }) {
-            Text("Register")
+            Text("Cancel")
         }
     }
 }

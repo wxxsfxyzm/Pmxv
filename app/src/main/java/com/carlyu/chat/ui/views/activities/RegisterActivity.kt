@@ -8,47 +8,44 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import com.carlyu.chat.ui.theme.ChatdemoTheme
-import com.carlyu.chat.ui.views.screens.LoginScreen
+import com.carlyu.chat.ui.views.screens.RegisterScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class RegisterActivity : ComponentActivity() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+
         setContent {
-            ChatdemoTheme(isSystemInDarkTheme(), true) {
-                LoginScreen(
-                    onLoginSuccess = {
-                        onLogin()
+            ChatdemoTheme(
+                dynamicColor = true,
+                darkTheme = isSystemInDarkTheme()
+            ) {
+                RegisterScreen(
+                    onRegisterSuccess = {
+                        // Handle register
                     },
-                    onRegister = {
-                        register()
+                    onCancel = {
+                        // Handle login
                     }
                 )
             }
         }
     }
 
-    private fun onLogin() {
-        // 保存登录状态
+    private fun onRegister() {
+        // 保存注册状态
         with(sharedPreferences.edit()) {
             putBoolean("is_logged_in", true)
             apply()
         }
-        // 启动 MainActivity
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        // 启动 LoginActivity
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    private fun register() {
-        // 启动 RegisterActivity
-        val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-        startActivity(intent)
-
     }
 }
