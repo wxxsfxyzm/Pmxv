@@ -1,4 +1,4 @@
-package com.carlyu.chat.ui.screens
+package com.carlyu.chat.ui.screens.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

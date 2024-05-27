@@ -1,5 +1,6 @@
 package com.carlyu.chat.ui.screens.views
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import com.carlyu.chat.ui.components.AppIconsImpl
 import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsItemSwitch
 import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsNormalItems
 import com.carlyu.chat.ui.components.SettingsItemsImpl.ThemeStyleSection
+import com.carlyu.chat.ui.screens.activities.AboutPageActivity
 import com.carlyu.chat.viewmodels.SettingsViewModel
 
 @Composable
@@ -94,7 +96,10 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
                     icon = AppIconsImpl.Infos,
                     title = "About",
                     subtitle = "0.0.1",
-                    onClick = {}
+                    onClick = {
+                        val intent = Intent(context, AboutPageActivity::class.java)
+                        context.startActivity(intent)
+                    }
                 )
                 SettingsNormalItems(
                     icon = Icons.Default.SystemUpdate,

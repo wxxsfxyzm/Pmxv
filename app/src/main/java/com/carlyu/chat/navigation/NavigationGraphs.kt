@@ -4,10 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.carlyu.chat.ui.screens.views.FavouriteScreen
-import com.carlyu.chat.ui.screens.views.HomeScreen
-import com.carlyu.chat.ui.screens.views.PreferenceScreen
 import com.carlyu.chat.viewmodels.SettingsViewModel
 
 class NavigationGraphs(
@@ -21,15 +17,16 @@ class NavigationGraphs(
         NavHost(
             navController, startDestination = Screen.HomeScreen.route
         ) {
-            composable(Screen.HomeScreen.route) {
-                HomeScreen()
-            }
-            composable(Screen.Favourite.route) {
-                FavouriteScreen()
-            }
-            composable(Screen.Settings.route) {
-                PreferenceScreen(settingsViewModel)
-            }
+
+            /*            composable(Screen.HomeScreen.route) {
+                            HomeScreen()
+                        }
+                        composable(Screen.Favourite.route) {
+                            FavouriteScreen()
+                        }
+                        composable(Screen.Settings.route) {
+                            PreferenceScreen(settingsViewModel)
+                        }*/
         }
     }
 }

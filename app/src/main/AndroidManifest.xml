@@ -15,7 +15,7 @@
         android:name=".ChatApplication"
         android:theme="@style/Theme.Chatdemo">
         <activity
-            android:name=".ui.screens.MainActivity"
+            android:name=".ui.screens.activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:enableOnBackInvokedCallback="true"
@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.screens.activities.AboutPageActivity"
+            android:exported="false"
+            android:label="@string/about"
+            android:theme="@style/Theme.Chatdemo" />
+
     </application>
 
 </manifest>

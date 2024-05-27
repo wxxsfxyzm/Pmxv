@@ -20,11 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.carlyu.chat.models.data.BottomSheetContent.About
 import com.carlyu.chat.models.data.BottomSheetContent.CheckUpdates
-import com.carlyu.chat.navigation.NavigationGraphs
 import com.carlyu.chat.navigation.Screen
 import com.carlyu.chat.ui.screens.views.FavouriteScreen
 import com.carlyu.chat.ui.screens.views.HomeScreen
@@ -36,12 +33,8 @@ import com.carlyu.chat.viewmodels.SettingsViewModel
 fun ScaffoldLayout() {
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val navController: NavHostController = rememberNavController()
     val currentScreen = remember { mutableStateOf<Screen>(Screen.HomeScreen) }
     val settingsViewModel: SettingsViewModel = hiltViewModel()
-    val navigationGraph = NavigationGraphs(navController, settingsViewModel)
-
-    val buttonsVisible = remember { mutableStateOf(true) }
     val sheetState = rememberModalBottomSheetState()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -72,6 +65,7 @@ fun ScaffoldLayout() {
                 Screen.HomeScreen -> HomeScreen()
                 Screen.Favourite -> FavouriteScreen()
                 Screen.Settings -> PreferenceScreen(settingsViewModel = settingsViewModel)
+                else -> {}
             }
         }
         if (settingsViewModel.bottomSheetState.value) {
