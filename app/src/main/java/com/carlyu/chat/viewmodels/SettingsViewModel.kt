@@ -1,12 +1,15 @@
 package com.carlyu.chat.viewmodels
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.carlyu.chat.models.data.BottomSheetContent
 import com.carlyu.chat.models.data.ThemeStyleType
+import com.carlyu.chat.ui.views.activities.LoginActivity
 import com.carlyu.chat.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,6 +25,10 @@ class SettingsViewModel @Inject constructor(
     val bottomSheetState = mutableStateOf(false)
     val bottomSheetContent = mutableStateOf<BottomSheetContent?>(null)
 
+    // logout setting
+    // val logoutDialogState = mutableStateOf(false)
+    val finishActivity = MutableLiveData<Boolean>()
+
     // switchValue
     val switchState1 = mutableStateOf(sharedPreferences.getBoolean("switch_state_1", false))
     val switchState2 = mutableStateOf(sharedPreferences.getBoolean("switch_state_2", false))
@@ -30,6 +37,20 @@ class SettingsViewModel @Inject constructor(
     // UI Control Variables
     val uiMode = mutableStateOf(getThemeSetting()) // 添加这一行
     val useDynamicColor = mutableStateOf(sharedPreferences.getBoolean("dynamic_color", false))
+
+    fun onLogoutClicked() {
+        with(sharedPreferences.edit()) {
+            putBoolean("is_logged_in", false)
+            apply()
+        }
+        context.startActivity(
+            Intent(
+                context,
+                LoginActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        finishActivity.value = true
+    }
 
     fun onSwitchChange1(newState: Boolean) {
         switchState1.value = newState

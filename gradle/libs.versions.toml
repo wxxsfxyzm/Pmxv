@@ -2,6 +2,7 @@
 accompanistPagerVersion = "0.20.0"
 agp = "8.4.1"
 animation = "1.6.7"
+coreSplashscreenVersion = "1.0.1"
 kotlin = "1.9.23"
 coreKtx = "1.13.1"
 nav = "2.7.7"
@@ -20,6 +21,7 @@ datastoreCoreAndroid = "1.1.1"
 [libraries]
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreenVersion" }
 google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

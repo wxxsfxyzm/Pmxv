@@ -1,4 +1,4 @@
-package com.carlyu.chat.ui.screens.views
+package com.carlyu.chat.ui.views.screens
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column

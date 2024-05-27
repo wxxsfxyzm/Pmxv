@@ -1,4 +1,4 @@
-package com.carlyu.chat.ui.screens.activities
+package com.carlyu.chat.ui.views.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,6 +28,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()
+            // Observe the finishActivity LiveData
+            settingsViewModel.finishActivity.observe(this) { shouldFinish ->
+                if (shouldFinish) {
+                    finish()
+                }
+            }
+
             val isDarkTheme = when (settingsViewModel.uiMode.value) {
                 ThemeStyleType.LIGHT -> false
                 ThemeStyleType.DARK -> true

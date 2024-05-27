@@ -1,4 +1,4 @@
-package com.carlyu.chat.ui.screens.activities
+package com.carlyu.chat.ui.views.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,8 +11,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.chat.models.data.ThemeStyleType
-import com.carlyu.chat.ui.screens.views.AboutPageScreen
 import com.carlyu.chat.ui.theme.ChatdemoTheme
+import com.carlyu.chat.ui.views.screens.AboutPageScreen
 import com.carlyu.chat.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
