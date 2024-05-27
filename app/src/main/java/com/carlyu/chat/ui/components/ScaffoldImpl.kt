@@ -14,28 +14,30 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.carlyu.chat.models.data.BottomSheetContent.About
 import com.carlyu.chat.models.data.BottomSheetContent.CheckUpdates
-import com.carlyu.chat.navigation.Destinations
 import com.carlyu.chat.navigation.NavigationGraphs
+import com.carlyu.chat.navigation.Screen
+import com.carlyu.chat.ui.screens.views.FavouriteScreen
+import com.carlyu.chat.ui.screens.views.HomeScreen
+import com.carlyu.chat.ui.screens.views.PreferenceScreen
 import com.carlyu.chat.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldLayout() {
+    val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val navController: NavHostController = rememberNavController()
+    val currentScreen = remember { mutableStateOf<Screen>(Screen.HomeScreen) }
     val settingsViewModel: SettingsViewModel = hiltViewModel()
     val navigationGraph = NavigationGraphs(navController, settingsViewModel)
 
@@ -57,16 +59,20 @@ fun ScaffoldLayout() {
         },
         bottomBar = {
             BottomBar(
-                navController = navController,
-                state = buttonsVisible,
-                modifier = Modifier
+                currentScreen = currentScreen.value,
+                onScreenSelected = { screen -> currentScreen.value = screen }
             )
         }
     ) { paddingValues ->
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            navigationGraph.Create()
+            // navigationGraph.Create()
+            when (currentScreen.value) {
+                Screen.HomeScreen -> HomeScreen()
+                Screen.Favourite -> FavouriteScreen()
+                Screen.Settings -> PreferenceScreen(settingsViewModel = settingsViewModel)
+            }
         }
         if (settingsViewModel.bottomSheetState.value) {
             ModalBottomSheet(
@@ -92,39 +98,54 @@ fun ScaffoldLayout() {
 
 @Composable
 fun BottomBar(
-    navController: NavHostController,
-    state: MutableState<Boolean>,
-    modifier: Modifier = Modifier
+    //navController: NavHostController,
+    //state: MutableState<Boolean>,
+    //modifier: Modifier = Modifier
+    currentScreen: Screen,
+    onScreenSelected: (Screen) -> Unit
 ) {
     val screens = listOf(
-        Destinations.HomeScreen, Destinations.Favourite, Destinations.Settings
+        Screen.HomeScreen, Screen.Favourite, Screen.Settings
     )
 
-    NavigationBar(modifier = modifier) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-
+    NavigationBar {
         screens.forEach { screen ->
             NavigationBarItem(
-                label = {
-                    Text(text = screen.title!!)
-                },
-                icon = {
-                    Icon(imageVector = screen.icon!!, contentDescription = "Test")
-                },
-                selected = currentRoute == screen.route,
-                onClick = {
-                    navController.navigate(screen.route) {
-
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                            inclusive = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
+                label = { Text(text = screen.title) },
+                icon = { Icon(imageVector = screen.icon, contentDescription = screen.title) },
+                selected = currentScreen == screen,
+                onClick = { onScreenSelected(screen) }
             )
         }
     }
+
+
+    /*    NavigationBar(modifier = modifier) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+
+            screens.forEach { screen ->
+                val context = LocalContext.current
+                NavigationBarItem(
+                    label = {
+                        Text(text = screen.title!!)
+                    },
+                    icon = {
+                        Icon(imageVector = screen.icon!!, contentDescription = "Test")
+                    },
+                    selected = currentRoute == screen.route,
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            ToastUtils.showToast(context, "Navigating to ${screen.route}")
+                            popUpTo(navController.graph.startDestinationId) {
+                                //saveState = true
+                                inclusive = true
+                            }
+                            launchSingleTop = false
+                            //restoreState = true
+                        }
+                    },
+                )
+            }
+        }*/
 }

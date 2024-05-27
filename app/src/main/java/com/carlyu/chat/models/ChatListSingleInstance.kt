@@ -1,6 +1,6 @@
 package com.carlyu.chat.models
 
-data class ChatListSingleData(
+data class ChatListSingleInstance(
     val content: String,
     val sender: String,
     val receiver: String,

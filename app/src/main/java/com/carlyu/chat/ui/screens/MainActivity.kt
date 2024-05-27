@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.chat.models.data.ThemeStyleType
 import com.carlyu.chat.ui.components.ScaffoldLayout
 import com.carlyu.chat.ui.theme.ChatdemoTheme
-import com.carlyu.chat.utils.PreferenceUtils
+import com.carlyu.chat.utils.SharedPreferenceUtils
 import com.carlyu.chat.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,8 +23,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         // 调用 PreferenceUtils.clearUnusedSharedPreferences 方法
-        val keys = listOf("")
-        PreferenceUtils.clearUnusedSharedPreferences(this, keys)
+        val unUsedKeys = listOf("")
+        SharedPreferenceUtils.clearUnusedSharedPreferences(this, unUsedKeys)
 
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()

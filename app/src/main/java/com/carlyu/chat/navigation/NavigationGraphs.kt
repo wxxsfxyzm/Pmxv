@@ -19,15 +19,15 @@ class NavigationGraphs(
     @Composable
     fun Create() {
         NavHost(
-            navController, startDestination = Destinations.HomeScreen.route
+            navController, startDestination = Screen.HomeScreen.route
         ) {
-            composable(Destinations.HomeScreen.route) {
+            composable(Screen.HomeScreen.route) {
                 HomeScreen()
             }
-            composable(Destinations.Favourite.route) {
+            composable(Screen.Favourite.route) {
                 FavouriteScreen()
             }
-            composable(Destinations.Settings.route) {
+            composable(Screen.Settings.route) {
                 PreferenceScreen(settingsViewModel)
             }
         }

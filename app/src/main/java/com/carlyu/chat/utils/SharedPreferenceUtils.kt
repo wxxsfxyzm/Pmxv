@@ -3,7 +3,7 @@ package com.carlyu.chat.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-object PreferenceUtils {
+object SharedPreferenceUtils {
 
     fun clearUnusedSharedPreferences(context: Context, keys: List<String>) {
         val sharedPreferences = context.getSharedPreferences("MyApp", Context.MODE_PRIVATE)

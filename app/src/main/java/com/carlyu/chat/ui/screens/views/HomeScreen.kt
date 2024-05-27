@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.carlyu.chat.models.ChatListSingleData
+import com.carlyu.chat.models.ChatListSingleInstance
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.random.Random
@@ -20,10 +20,10 @@ import kotlin.random.Random
 @Preview
 fun HomeScreen() {
     val context = LocalContext.current
-    val messages = mutableListOf<ChatListSingleData>().apply {
+    val messages = mutableListOf<ChatListSingleInstance>().apply {
         repeat(15) {
             add(
-                ChatListSingleData(
+                ChatListSingleInstance(
                     content = "Message ${Random.nextInt(1000, 9999)}",
                     sender = "Sender ${Random.nextInt(1000, 9999)}",
                     receiver = "Receiver ${Random.nextInt(1000, 9999)}",
@@ -37,7 +37,7 @@ fun HomeScreen() {
 }
 
 @Composable
-fun ChatMessageList(messages: List<ChatListSingleData>) {
+fun ChatMessageList(messages: List<ChatListSingleInstance>) {
     LazyColumn {
         items(messages) { message ->
             ChatMessageItem(message = message)
@@ -46,7 +46,7 @@ fun ChatMessageList(messages: List<ChatListSingleData>) {
 }
 
 @Composable
-fun ChatMessageItem(message: ChatListSingleData) {
+fun ChatMessageItem(message: ChatListSingleInstance) {
 
     // 在这里显示你的聊天消息
     // 例如，你可以使用Text组件来显示消息的内容

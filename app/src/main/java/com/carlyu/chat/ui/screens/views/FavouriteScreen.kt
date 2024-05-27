@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 
+
 @Composable
 fun FavouriteScreen() {
     val context = LocalContext.current
@@ -29,3 +30,19 @@ fun FavouriteScreen() {
         )
     }
 }
+
+/*fun getCameraId(context: Context) {
+    val cameraManager = getSystemService(context, CameraManager::class.java)
+    try {
+        for (cameraId in cameraManager.cameraIdList) {
+            val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+            val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
+            if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
+                Log.d("Camera", "Front Camera: $cameraId")
+            } else if (facing == CameraCharacteristics.LENS_FACING_BACK) {
+                Log.d("Camera", "Back Camera: $cameraId")
+            }
+        }
+    } catch (e: CameraAccessException) {
+        e.printStackTrace()
+    }*/
