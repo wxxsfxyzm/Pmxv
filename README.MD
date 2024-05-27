@@ -1,7 +1,9 @@
 # Gemini Android Client
 
 This project is a third-party Android client for Gemini, based on API Token authentication. The
-client is implemented using Jetpack Compose, a modern toolkit for building native Android UI. The UI
+client does not rely on official library Google provides, but a private server instead. It is
+implemented using Jetpack Compose, a
+modern toolkit for building native Android UI. The UI
 widgets are built using the Google Material3 library.
 
 ## Current Progress
@@ -18,6 +20,14 @@ The next steps for this project are:
 
 - Connect with the server API.
 - Establish a complete front-end and back-end communication.
+
+## Caution
+
+- This client does not use official library Google prepared for Android.
+- You need a server to use this client. The server is not provided in this project.
+    - [My server](https://github.com/wxxsfxyzm/API_Backend) has been working in progress
+- For a server implementation, please refer to
+  the [Document](https://ai.google.dev/gemini-api/docs/get-started/tutorial?hl=zh-cn&lang=python)
 
 ## Built With
 
