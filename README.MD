@@ -1,4 +1,4 @@
-# Project Title: Gemini Android Client
+# Gemini Android Client
 
 This project is a third-party Android client for Gemini, based on API Token authentication. The
 client is implemented using Jetpack Compose, a modern toolkit for building native Android UI. The UI
