@@ -24,7 +24,7 @@ The next steps for this project are:
 ## Getting Started
 
 - This client does not use official library Google prepared for Android.
-    - For reasons: Gemini does not offer service in my region, so I have to use a private server to
+    - For reason: Gemini does not offer service in my region, so I have to use a private server to
       access the API.
 - You need a server to use this client. The server is not provided in this project.
     - [My server](https://github.com/wxxsfxyzm/API_Backend) has been working in progress
@@ -36,6 +36,10 @@ The next steps for this project are:
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) - The modern toolkit for building
   native Android UI.
 - [Google Material3](https://m3.material.io/) - Material Design 3 components for Android.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## Authors
 
