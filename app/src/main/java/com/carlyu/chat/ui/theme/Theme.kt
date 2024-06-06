@@ -1,6 +1,6 @@
 package com.carlyu.chat.ui.theme
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -39,7 +39,7 @@ fun ChatdemoTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
+            val window = (view.context as ComponentActivity).window
             //window.statusBarColor = colorScheme.primary.toArgb() // change color status bar here
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }

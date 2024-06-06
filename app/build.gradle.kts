@@ -85,7 +85,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     // Optional - Add window size utils
     implementation(libs.androidx.material3.window.size)
-
+    implementation(libs.material)
 
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.runtime.compose)

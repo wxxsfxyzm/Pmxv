@@ -1,5 +1,7 @@
 package com.carlyu.chat.ui.views.activities
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,7 +40,8 @@ class MainActivity : ComponentActivity() {
             val isDarkTheme = when (settingsViewModel.uiMode.value) {
                 ThemeStyleType.LIGHT -> false
                 ThemeStyleType.DARK -> true
-                else -> isSystemInDarkTheme()
+                else ->
+                    isSystemInDarkTheme()
             }
             ChatdemoTheme(
                 darkTheme = isDarkTheme,
@@ -46,11 +49,16 @@ class MainActivity : ComponentActivity() {
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.primary
-                ) {
+                    color = MaterialTheme.colorScheme.background,
+
+                    ) {
                     ScaffoldLayout()
                 }
             }
         }
+    }
+
+    private fun isDarkMode(resources: Resources): Boolean {
+        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
     }
 }
