@@ -7,6 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import com.carlyu.chat.ui.theme.ChatdemoTheme
 import com.carlyu.chat.ui.views.screens.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,14 +25,20 @@ class LoginActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChatdemoTheme(isSystemInDarkTheme(), true) {
-                LoginScreen(
-                    onLoginSuccess = {
-                        onLogin()
-                    },
-                    onRegister = {
-                        register()
-                    }
-                )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+
+                ) {
+                    LoginScreen(
+                        onLoginSuccess = {
+                            onLogin()
+                        },
+                        onRegister = {
+                            register()
+                        }
+                    )
+                }
             }
         }
     }

@@ -65,7 +65,6 @@ fun ScaffoldLayout() {
                 Screen.HomeScreen -> HomeScreen()
                 Screen.Favourite -> FavouriteScreen()
                 Screen.Settings -> PreferenceScreen(settingsViewModel = settingsViewModel)
-                else -> {}
             }
         }
         if (settingsViewModel.bottomSheetState.value) {

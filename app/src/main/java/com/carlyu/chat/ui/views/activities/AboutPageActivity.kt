@@ -34,7 +34,7 @@ class AboutPageActivity : ComponentActivity() {
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AboutPageScreen()
                 }

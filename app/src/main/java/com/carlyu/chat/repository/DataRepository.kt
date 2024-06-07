@@ -1,7 +1,7 @@
 package com.carlyu.chat.repository
 
+import com.carlyu.chat.api.ApiService
 import com.carlyu.chat.models.ExampleDataModel
-import com.carlyu.chat.service.ApiService
 import javax.inject.Inject
 import javax.inject.Singleton
 

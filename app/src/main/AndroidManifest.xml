@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
+        android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
         android:windowSoftInputMode="adjustResize"
         android:name=".ChatApplication"
         android:theme="@style/Theme.Chatdemo">
@@ -33,6 +34,7 @@
             android:enableOnBackInvokedCallback="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:theme="@style/Theme.Chatdemo" />
+        <activity android:name=".ui.views.activities.ChatActivity" />
         <activity
             android:name=".ui.views.activities.AboutPageActivity"
             android:exported="false"

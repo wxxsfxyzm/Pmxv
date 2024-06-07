@@ -35,233 +35,231 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.carlyu.chat.models.data.ThemeStyleType
 
-object SettingsItemsImpl {
-    @Composable
-    fun SettingsNormalItems(
-        icon: ImageVector,
-        title: String,
-        subtitle: String,
-        onClick: () -> Unit
-    ) {
-        val context = LocalContext.current
-        val vibrator = context.getSystemService(Vibrator::class.java)
-        ListItem(
-            leadingContent = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier
-                )
-            },
-            headlineContent = { Text(text = title) },
-            supportingContent = { Text(text = subtitle) },
-            modifier = Modifier.clickable {
-                onClick()
-                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-            }
-        )
-    }
+@Composable
+fun SettingsNormalItems(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    val context = LocalContext.current
+    val vibrator = context.getSystemService(Vibrator::class.java)
+    ListItem(
+        leadingContent = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier
+            )
+        },
+        headlineContent = { Text(text = title) },
+        supportingContent = { Text(text = subtitle) },
+        modifier = Modifier.clickable {
+            onClick()
+            vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+        }
+    )
+}
 
-    @Composable
-    fun SettingsNormalItemsWithDialogRadioButton(
-        icon: ImageVector,
-        title: String,
-        subtitle: String,
-        dialogTitle: String,
-        dialogRadioButtonOptionsList: List<String>,
-        selectedOption: MutableState<Int>,
-        onOptionSelected: (String) -> Unit = {}
-    ) {
-        val context = LocalContext.current
-        val vibrator = context.getSystemService(Vibrator::class.java)
-        val showDialog = remember { mutableStateOf(false) }
-        //val selectedOption = remember { mutableStateOf(0) }
+@Composable
+fun SettingsNormalItemsWithDialogRadioButton(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    dialogTitle: String,
+    dialogRadioButtonOptionsList: List<String>,
+    selectedOption: MutableState<Int>,
+    onOptionSelected: (String) -> Unit = {}
+) {
+    val context = LocalContext.current
+    val vibrator = context.getSystemService(Vibrator::class.java)
+    val showDialog = remember { mutableStateOf(false) }
+    //val selectedOption = remember { mutableStateOf(0) }
 
-        if (showDialog.value) {
-            Dialog(
-                onDismissRequest = { showDialog.value = false }
-            ) {
-                Card {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = dialogTitle,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(12.dp)
-                        )
-                        dialogRadioButtonOptionsList.forEachIndexed { index, option ->
-                            Row(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(0.dp)
-                                    .selectable(
-                                        selected = (index == selectedOption.value),
-                                        onClick = {
-                                            selectedOption.value = index
-                                            showDialog.value = false // 关闭对话框
-                                            onOptionSelected(option)
-                                        }
-                                    ),
-                                verticalAlignment = Alignment.CenterVertically // 添加这一行
-                            ) {
-                                RadioButton(
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = { showDialog.value = false }
+        ) {
+            Card {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = dialogTitle,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                    dialogRadioButtonOptionsList.forEachIndexed { index, option ->
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(0.dp)
+                                .selectable(
                                     selected = (index == selectedOption.value),
                                     onClick = {
                                         selectedOption.value = index
-                                        showDialog.value = false
+                                        showDialog.value = false // 关闭对话框
                                         onOptionSelected(option)
                                     }
-                                )
-                                Text(
-                                    text = option,
-                                    modifier = Modifier.padding(start = 16.dp)
-                                )
-                            }
-
+                                ),
+                            verticalAlignment = Alignment.CenterVertically // 添加这一行
+                        ) {
+                            RadioButton(
+                                selected = (index == selectedOption.value),
+                                onClick = {
+                                    selectedOption.value = index
+                                    showDialog.value = false
+                                    onOptionSelected(option)
+                                }
+                            )
+                            Text(
+                                text = option,
+                                modifier = Modifier.padding(start = 16.dp)
+                            )
                         }
-                        Spacer(modifier = Modifier.padding(5.dp))
+
                     }
+                    Spacer(modifier = Modifier.padding(5.dp))
                 }
             }
         }
-
-        ListItem(
-            leadingContent = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier
-                )
-            },
-            headlineContent = { Text(text = title) },
-            supportingContent = { Text(text = subtitle) },
-            modifier = Modifier.clickable {
-                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                showDialog.value = true
-            }
-        )
     }
 
+    ListItem(
+        leadingContent = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier
+            )
+        },
+        headlineContent = { Text(text = title) },
+        supportingContent = { Text(text = subtitle) },
+        modifier = Modifier.clickable {
+            vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+            showDialog.value = true
+        }
+    )
+}
 
-    @Composable
-    fun SettingsItemSwitch(
-        icon: ImageVector,
-        title: String,
-        subtitle: String,
-        checked: Boolean,
-        onCheckedChange: (Boolean) -> Unit
-    ) {
-        val context = LocalContext.current
-        val vibrator = context.getSystemService(Vibrator::class.java)
-        ListItem(
-            modifier = Modifier
-                .clickable {
-                    onCheckedChange(!checked)
+
+@Composable
+fun SettingsItemSwitch(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    val context = LocalContext.current
+    val vibrator = context.getSystemService(Vibrator::class.java)
+    ListItem(
+        modifier = Modifier
+            .clickable {
+                onCheckedChange(!checked)
+                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+            },
+        leadingContent = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier
+            )
+        },
+        headlineContent = { Text(text = title) },
+        supportingContent = { Text(text = subtitle) },
+        trailingContent = {
+            Switch(
+                checked = checked,
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
                     vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
                 },
-            leadingContent = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier
-                )
-            },
-            headlineContent = { Text(text = title) },
-            supportingContent = { Text(text = subtitle) },
-            trailingContent = {
-                Switch(
-                    checked = checked,
-                    onCheckedChange = { isChecked ->
-                        onCheckedChange(isChecked)
-                        vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                    },
-                    modifier = Modifier.clickable { }
-                )
-            }
-        )
-    }
+                modifier = Modifier.clickable { }
+            )
+        }
+    )
+}
 
-    @Composable
-    fun ThemeStyleSection(
-        modifier: Modifier = Modifier,
-        themeStyle: ThemeStyleType,
-        changeThemeStyle: (ThemeStyleType) -> Unit,
-        onClick: () -> Unit?
-    ) {
-        val context = LocalContext.current
-        val vibrator = context.getSystemService(Vibrator::class.java)
-        ListItem(
-            leadingContent = {
-                Icon(
-                    imageVector = Icons.Default.ModeNight,
-                    contentDescription = null,
-                    modifier = Modifier
-                )
-            },
-            headlineContent = { Text("Dark Mode") },
-            supportingContent = {
-                Column(modifier = modifier) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(space = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        InputChip(
-                            selected = themeStyle == ThemeStyleType.LIGHT,
-                            onClick = {
-                                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                                if (themeStyle != ThemeStyleType.LIGHT)
-                                    changeThemeStyle(ThemeStyleType.LIGHT)
-                            },
-                            label = { Text(text = "Light") },
-                            leadingIcon = {
-                                Icon(
-                                    modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                    imageVector = AppIconsImpl.LightMode,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                        InputChip(
-                            selected = themeStyle == ThemeStyleType.DARK,
-                            onClick = {
-                                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                                if (themeStyle != ThemeStyleType.DARK)
-                                    changeThemeStyle(ThemeStyleType.DARK)
-                            },
-                            label = { Text("Dark") },
-                            leadingIcon = {
-                                Icon(
-                                    modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                    imageVector = AppIconsImpl.DarkMode,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                    }
+@Composable
+fun ThemeStyleSection(
+    modifier: Modifier = Modifier,
+    themeStyle: ThemeStyleType,
+    changeThemeStyle: (ThemeStyleType) -> Unit,
+    onClick: () -> Unit?
+) {
+    val context = LocalContext.current
+    val vibrator = context.getSystemService(Vibrator::class.java)
+    ListItem(
+        leadingContent = {
+            Icon(
+                imageVector = Icons.Default.ModeNight,
+                contentDescription = null,
+                modifier = Modifier
+            )
+        },
+        headlineContent = { Text("Dark Mode") },
+        supportingContent = {
+            Column(modifier = modifier) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(space = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     InputChip(
-                        selected = themeStyle == ThemeStyleType.FOLLOW_SYSTEM,
+                        selected = themeStyle == ThemeStyleType.LIGHT,
                         onClick = {
                             vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                            if (themeStyle != ThemeStyleType.FOLLOW_SYSTEM)
-                                changeThemeStyle(ThemeStyleType.FOLLOW_SYSTEM)
+                            if (themeStyle != ThemeStyleType.LIGHT)
+                                changeThemeStyle(ThemeStyleType.LIGHT)
                         },
-                        label = { Text("Follow System") },
+                        label = { Text(text = "Light") },
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier.size(size = AssistChipDefaults.IconSize),
-                                imageVector = AppIconsImpl.Android,
+                                imageVector = AppIconsImpl.LightMode,
+                                contentDescription = null
+                            )
+                        }
+                    )
+                    InputChip(
+                        selected = themeStyle == ThemeStyleType.DARK,
+                        onClick = {
+                            vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+                            if (themeStyle != ThemeStyleType.DARK)
+                                changeThemeStyle(ThemeStyleType.DARK)
+                        },
+                        label = { Text("Dark") },
+                        leadingIcon = {
+                            Icon(
+                                modifier = Modifier.size(size = AssistChipDefaults.IconSize),
+                                imageVector = AppIconsImpl.DarkMode,
                                 contentDescription = null
                             )
                         }
                     )
                 }
-            },
+                InputChip(
+                    selected = themeStyle == ThemeStyleType.FOLLOW_SYSTEM,
+                    onClick = {
+                        vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+                        if (themeStyle != ThemeStyleType.FOLLOW_SYSTEM)
+                            changeThemeStyle(ThemeStyleType.FOLLOW_SYSTEM)
+                    },
+                    label = { Text("Follow System") },
+                    leadingIcon = {
+                        Icon(
+                            modifier = Modifier.size(size = AssistChipDefaults.IconSize),
+                            imageVector = AppIconsImpl.Android,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+        },
 
-            modifier = Modifier.clickable {
-                onClick()
-                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-            })
+        modifier = Modifier.clickable {
+            onClick()
+            vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+        })
 
-    }
 }
 
 

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.carlyu.chat.R
 import com.carlyu.chat.models.data.BottomSheetContent
 import com.carlyu.chat.models.data.ThemeStyleType
 import com.carlyu.chat.ui.views.activities.LoginActivity
@@ -93,6 +94,9 @@ class SettingsViewModel @Inject constructor(
             theme.toString()
         ).apply()
         uiMode.value = theme
+        if (theme == ThemeStyleType.LIGHT) {
+            context.setTheme(R.style.Theme_Chatdemo)
+        }
     }
 
 

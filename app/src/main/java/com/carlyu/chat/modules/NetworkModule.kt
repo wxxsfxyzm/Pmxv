@@ -1,6 +1,7 @@
 package com.carlyu.chat.modules
 
-import com.carlyu.chat.service.ApiService
+import com.carlyu.chat.api.ApiService
+import com.carlyu.chat.api.ApiUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.example.com/")
+            .baseUrl(ApiUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

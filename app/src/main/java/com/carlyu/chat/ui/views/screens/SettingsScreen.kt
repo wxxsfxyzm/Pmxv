@@ -18,9 +18,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.carlyu.chat.models.data.BottomSheetContent
 import com.carlyu.chat.ui.components.AppIconsImpl
-import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsItemSwitch
-import com.carlyu.chat.ui.components.SettingsItemsImpl.SettingsNormalItems
-import com.carlyu.chat.ui.components.SettingsItemsImpl.ThemeStyleSection
+import com.carlyu.chat.ui.components.SettingsItemSwitch
+import com.carlyu.chat.ui.components.SettingsNormalItems
+import com.carlyu.chat.ui.components.ThemeStyleSection
 import com.carlyu.chat.ui.views.activities.AboutPageActivity
 import com.carlyu.chat.viewmodels.SettingsViewModel
 

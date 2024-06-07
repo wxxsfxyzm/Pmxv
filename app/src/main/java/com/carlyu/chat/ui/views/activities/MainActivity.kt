@@ -1,7 +1,5 @@
 package com.carlyu.chat.ui.views.activities
 
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -58,7 +56,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun isDarkMode(resources: Resources): Boolean {
-        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-    }
 }
