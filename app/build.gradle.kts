@@ -1,18 +1,28 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.compose.compiler)
+
 }
 
 android {
     namespace = "com.carlyu.chat"
-    compileSdk = 34
-
+    compileSdk = 35
+    // 加载 keystore.properties
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val keystoreProps = Properties().apply {
+        load(FileInputStream(keystorePropertiesFile))
+    }
     defaultConfig {
         applicationId = "com.carlyu.chat"
         minSdk = 34
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -22,8 +32,38 @@ android {
         }
     }
 
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = keystoreProps.getProperty("keyAlias")
+            keyPassword = keystoreProps.getProperty("keyPassword")
+            storeFile = rootProject.file(keystoreProps["storeFile"] as String)
+            storePassword = keystoreProps.getProperty("storePassword")
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+
+        create("release") {
+            keyAlias = keystoreProps.getProperty("keyAlias")
+            keyPassword = keystoreProps.getProperty("keyPassword")
+            storeFile = rootProject.file(keystoreProps["storeFile"] as String)
+            storePassword = keystoreProps.getProperty("storePassword")
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+    }
+
     buildTypes {
-        release {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -31,6 +71,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -51,12 +92,16 @@ android {
     }
 }
 
-configurations.all {
+/*configurations.all {
     resolutionStrategy.eachDependency {
         when {
             requested.name == "javapoet" -> useVersion("1.13.0")
         }
     }
+}*/
+room {
+    // Specify the schema directory
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {

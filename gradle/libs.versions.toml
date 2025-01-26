@@ -1,26 +1,26 @@
 [versions]
 accompanistPagerVersion = "0.20.0"
-agp = "8.4.1"
-animation = "1.6.7"
+agp = "8.6.1"
+animation = "1.7.6"
 converterGsonVersion = "2.9.0"
 coreSplashscreenVersion = "1.0.1"
-kotlin = "1.9.23"
-coreKtx = "1.13.1"
-kotlinxSerializationJsonVersion = "1.3.2"
+kotlin = "2.1.0"
+coreKtx = "1.15.0"
+kotlinxSerializationJsonVersion = "1.8.0"
 materialVersion = "1.12.0"
-nav = "2.7.7"
+nav = "2.8.5"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.8.1"
-activityCompose = "1.9.0"
-composeBom = "2024.05.00"
-ksp = "1.9.23-1.0.20"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.0"
+composeBom = "2025.01.00"
+ksp = "2.1.0-1.0.29"
 hilt = "2.49"
 hiltExt = "1.2.0"
 retrofitVersion = "2.11.0"
 room = "2.6.1"
-datastoreCoreAndroid = "1.1.1"
+datastoreCoreAndroid = "1.1.2"
 
 [libraries]
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
@@ -65,4 +65,6 @@ hilt-extCompiler = { group = "androidx.hilt", name = "hilt-compiler", version.re
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

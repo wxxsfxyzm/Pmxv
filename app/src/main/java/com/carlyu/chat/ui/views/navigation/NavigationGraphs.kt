@@ -1,4 +1,4 @@
-package com.carlyu.chat.navigation
+package com.carlyu.chat.ui.views.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi

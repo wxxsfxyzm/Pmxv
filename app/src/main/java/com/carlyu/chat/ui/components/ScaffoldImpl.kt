@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.chat.models.data.BottomSheetContent.About
 import com.carlyu.chat.models.data.BottomSheetContent.CheckUpdates
-import com.carlyu.chat.navigation.Screen
+import com.carlyu.chat.ui.views.navigation.Screen
 import com.carlyu.chat.ui.views.screens.FavouriteScreen
 import com.carlyu.chat.ui.views.screens.HomeScreen
 import com.carlyu.chat.ui.views.screens.PreferenceScreen
