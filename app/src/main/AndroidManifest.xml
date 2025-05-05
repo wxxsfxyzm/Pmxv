@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,34 +15,35 @@
         android:enableOnBackInvokedCallback="true"
         android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
         android:windowSoftInputMode="adjustResize"
-        android:name=".ChatApplication"
-        android:theme="@style/Theme.Chatdemo">
+        android:name=".PmxvApplication"
+        android:theme="@style/Theme.Pmxv">
         <activity
             android:name=".ui.views.activities.SplashActivity"
             android:exported="true"
             android:enableOnBackInvokedCallback="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:theme="@style/Theme.Chatdemo.MySplash">
+            android:theme="@style/Theme.Pmxv.MySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.views.activities.LoginActivity" />
         <activity
             android:name=".ui.views.activities.MainActivity"
             android:exported="false"
-            android:label="@string/app_name"
             android:enableOnBackInvokedCallback="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:theme="@style/Theme.Chatdemo" />
-        <activity android:name=".ui.views.activities.ChatActivity" />
+            android:theme="@style/Theme.Pmxv" />
         <activity
             android:name=".ui.views.activities.AboutPageActivity"
             android:exported="false"
             android:label="@string/about"
-            android:theme="@style/Theme.Chatdemo" />
-
+            android:theme="@style/Theme.Pmxv" />
+        <activity
+            android:name=".ui.views.activities.LoginActivity"
+            android:exported="false"
+            android:label="@string/about"
+            android:theme="@style/Theme.Pmxv" />
     </application>
 
 </manifest>

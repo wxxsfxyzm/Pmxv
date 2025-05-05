@@ -23,6 +23,6 @@ dependencyResolutionManagement {
 
 
 
-rootProject.name = "chatdemo"
+rootProject.name = "pmxv"
 include(":app")
  
