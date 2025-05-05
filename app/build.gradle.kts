@@ -8,11 +8,10 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.compose.compiler)
-
 }
 
 android {
-    namespace = "com.carlyu.chat"
+    namespace = "com.carlyu.pmxv"
     compileSdk = 35
     // 加载 keystore.properties
     val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -20,7 +19,7 @@ android {
         load(FileInputStream(keystorePropertiesFile))
     }
     defaultConfig {
-        applicationId = "com.carlyu.chat"
+        applicationId = "com.carlyu.pmxv"
         minSdk = 34
         targetSdk = 35
         versionCode = 1
