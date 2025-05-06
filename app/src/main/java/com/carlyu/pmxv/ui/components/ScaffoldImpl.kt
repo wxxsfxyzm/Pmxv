@@ -1,7 +1,11 @@
 package com.carlyu.pmxv.ui.components
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,19 +18,22 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.carlyu.pmxv.models.data.BottomSheetContent.About
-import com.carlyu.pmxv.models.data.BottomSheetContent.CheckUpdates
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.carlyu.pmxv.models.data.BottomSheetContent
 import com.carlyu.pmxv.ui.views.navigation.Screen
 import com.carlyu.pmxv.ui.views.screens.FavouriteScreen
 import com.carlyu.pmxv.ui.views.screens.HomeScreen
 import com.carlyu.pmxv.ui.views.screens.PreferenceScreen
-import com.carlyu.pmxv.viewmodels.SettingsViewModel
+import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +42,9 @@ fun ScaffoldLayout() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val currentScreen = remember { mutableStateOf<Screen>(Screen.HomeScreen) }
     val settingsViewModel: SettingsViewModel = hiltViewModel()
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val uiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -46,7 +55,7 @@ fun ScaffoldLayout() {
                     titleContentColor = MaterialTheme.colorScheme.onBackground,
                 ),
                 title = {
-                    Text("Chat Demo")
+                    Text("Pmxv")
                 },
             )
         },
@@ -67,30 +76,58 @@ fun ScaffoldLayout() {
                 Screen.Settings -> PreferenceScreen(settingsViewModel = settingsViewModel)
             }
         }
-        if (settingsViewModel.bottomSheetState.value) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    settingsViewModel.bottomSheetState.value = false
-                },
-                sheetState = sheetState
-            ) {
-                // Sheet content
-                when (settingsViewModel.bottomSheetContent.value) {
-                    CheckUpdates -> {
-                        BottomSheetCheckUpdateContent(settingsViewModel, sheetState)
-                    }
+        // 统一处理BottomSheet状态
+        when (uiState) {
+            is SettingsUiState.Success -> {
+                val successState = uiState as SettingsUiState.Success
+                if (successState.bottomSheetVisible) {
+                    ModalBottomSheet(
+                        modifier = Modifier.fillMaxHeight(),
+                        contentWindowInsets = { WindowInsets.systemBars },
+                        //containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                        onDismissRequest = { settingsViewModel.dismissBottomSheet() },
+                        scrimColor = MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f),
+                        sheetState = sheetState,
+                    ) {
+/*                        val view = LocalView.current
+                        (view.parent as? DialogWindowProvider)?.window?.let { window ->
+                            SideEffect {
+                                WindowCompat.getInsetsController(
+                                    window,
+                                    view
+                                ).isAppearanceLightStatusBars = false
+                            }
+                        }*/
+                        when (val content = successState.bottomSheetContent) {
+                            is BottomSheetContent.CheckUpdates ->
+                                BottomSheetCheckUpdateContent(
+                                    settingsViewModel = settingsViewModel,
+                                    content = content
+                                )
 
-                    About -> {}
-                    null -> {}
+                            is BottomSheetContent.Confirmation ->
+                                Unit
+                            // 添加其他类型处理
+                            null -> Unit
+                        }
+                    }
                 }
             }
+
+            else -> Unit
         }
+
     }
 }
 
+private fun ComponentActivity.setStatusBarAppearance(isLight: Boolean) {
+    WindowCompat.getInsetsController(window, window.decorView).apply {
+        isAppearanceLightStatusBars = isLight
+    }
+}
 
 @Composable
-fun BottomBar(
+private fun BottomBar(
     //navController: NavHostController,
     //state: MutableState<Boolean>,
     //modifier: Modifier = Modifier
@@ -111,34 +148,4 @@ fun BottomBar(
             )
         }
     }
-
-
-    /*    NavigationBar(modifier = modifier) {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-
-            screens.forEach { screen ->
-                val context = LocalContext.current
-                NavigationBarItem(
-                    label = {
-                        Text(text = screen.title!!)
-                    },
-                    icon = {
-                        Icon(imageVector = screen.icon!!, contentDescription = "Test")
-                    },
-                    selected = currentRoute == screen.route,
-                    onClick = {
-                        navController.navigate(screen.route) {
-                            ToastUtils.showToast(context, "Navigating to ${screen.route}")
-                            popUpTo(navController.graph.startDestinationId) {
-                                //saveState = true
-                                inclusive = true
-                            }
-                            launchSingleTop = false
-                            //restoreState = true
-                        }
-                    },
-                )
-            }
-        }*/
 }

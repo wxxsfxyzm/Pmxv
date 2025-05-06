@@ -1,9 +1,9 @@
-package com.carlyu.pmxv.viewmodels
+package com.carlyu.pmxv.ui.views.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlyu.pmxv.network.LoginService
-import com.carlyu.pmxv.network.Result
+import com.carlyu.pmxv.remote.LoginService
+import com.carlyu.pmxv.remote.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

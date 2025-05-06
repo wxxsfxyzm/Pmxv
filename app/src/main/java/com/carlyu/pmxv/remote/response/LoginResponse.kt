@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.network.response
+package com.carlyu.pmxv.remote.response
 
 import com.google.gson.annotations.SerializedName
 

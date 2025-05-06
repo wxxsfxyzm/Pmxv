@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.carlyu.pmxv.models.ChatListSingleInstance
+import com.carlyu.pmxv.models.entity.ChatListSingleInstance
 import com.carlyu.pmxv.ui.views.activities.ChatActivity
 import com.carlyu.pmxv.ui.views.uistate.ChatListUiState
 import java.text.SimpleDateFormat

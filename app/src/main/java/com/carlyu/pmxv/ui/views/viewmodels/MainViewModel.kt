@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.viewmodels
+package com.carlyu.pmxv.ui.views.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -23,17 +23,17 @@ class MainViewModel @Inject constructor() : ViewModel() {
         // fetchData()
     }
 
-/*    private fun fetchData() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                _data.value = ""
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            } finally {
-                _isLoading.value = false
+    /*    private fun fetchData() {
+            viewModelScope.launch {
+                _isLoading.value = true
+                try {
+                    _data.value = ""
+                    _error.value = null
+                } catch (e: Exception) {
+                    _error.value = e.message
+                } finally {
+                    _isLoading.value = false
+                }
             }
-        }
-    }*/
+        }*/
 }

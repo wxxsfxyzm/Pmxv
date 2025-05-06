@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.models
+package com.carlyu.pmxv.models.entity
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.carlyu.pmxv.ui.views.viewmodels.LoginViewModel
 import com.carlyu.pmxv.utils.ToastUtils
-import com.carlyu.pmxv.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {

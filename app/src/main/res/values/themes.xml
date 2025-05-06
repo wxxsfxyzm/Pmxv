@@ -10,4 +10,5 @@
         <!--        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>-->
         <item name="android:windowSplashScreenAnimationDuration">500</item>
     </style>
+
 </resources>

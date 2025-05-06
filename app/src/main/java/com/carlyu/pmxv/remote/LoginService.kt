@@ -1,6 +1,6 @@
-package com.carlyu.pmxv.network
+package com.carlyu.pmxv.remote
 
-import com.carlyu.pmxv.network.api.ApiService
+import com.carlyu.pmxv.remote.api.ApiService
 import javax.inject.Inject
 
 class LoginService @Inject constructor(private val apiService: ApiService) {
