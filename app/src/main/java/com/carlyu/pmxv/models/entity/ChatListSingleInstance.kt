@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.models
+package com.carlyu.pmxv.models.entity
 
 data class ChatListSingleInstance(
     val content: String,

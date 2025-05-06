@@ -147,6 +147,7 @@ dependencies {
     implementation(libs.hilt.extCompose)
     ksp(libs.hilt.extCompiler)
 
+    implementation(libs.cv4pve.api)
 
     // Room
     ksp(libs.room.compiler)

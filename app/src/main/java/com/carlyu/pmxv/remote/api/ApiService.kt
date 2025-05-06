@@ -1,6 +1,6 @@
-package com.carlyu.pmxv.network.api
+package com.carlyu.pmxv.remote.api
 
-import com.carlyu.pmxv.network.response.LoginResponse
+import com.carlyu.pmxv.remote.response.LoginResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

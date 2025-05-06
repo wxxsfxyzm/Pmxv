@@ -1,6 +1,6 @@
 package com.carlyu.pmxv.modules
 
-import com.carlyu.pmxv.network.api.ApiService
+import com.carlyu.pmxv.remote.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

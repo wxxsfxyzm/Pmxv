@@ -8,12 +8,15 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.pmxv.models.data.ThemeStyleType
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.screens.AboutPageScreen
-import com.carlyu.pmxv.viewmodels.SettingsViewModel
+import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,14 +26,30 @@ class AboutPageActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()
-            val isDarkTheme = when (settingsViewModel.uiMode.value) {
-                ThemeStyleType.LIGHT -> false
-                ThemeStyleType.DARK -> true
-                else -> isSystemInDarkTheme()
+            val uiState by settingsViewModel.uiState.collectAsState()
+            // 监听设置状态变化
+            val (isDarkTheme, dynamicColor) = when (uiState) {
+                is SettingsUiState.Success -> {
+                    val successState = uiState as SettingsUiState.Success
+                    Pair(
+                        when (successState.uiMode) {
+                            ThemeStyleType.LIGHT -> false
+                            ThemeStyleType.DARK -> true
+                            ThemeStyleType.FOLLOW_SYSTEM -> isSystemInDarkTheme()
+                        },
+                        successState.useDynamicColor
+                    )
+                }
+
+                SettingsUiState.Loading,
+                is SettingsUiState.Error -> {
+                    // 加载中和错误状态使用系统默认
+                    Pair(isSystemInDarkTheme(), false)
+                }
             }
             PmxvTheme(
                 darkTheme = isDarkTheme,
-                dynamicColor = settingsViewModel.useDynamicColor.value
+                dynamicColor = dynamicColor
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

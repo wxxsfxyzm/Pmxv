@@ -3,7 +3,7 @@ package com.carlyu.pmxv.ui.views.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.carlyu.pmxv.viewmodels.SettingsViewModel
+import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 
 class NavigationGraphs(
     private val navController: NavHostController,
