@@ -25,4 +25,8 @@
     <string name="ui_display">UI Display</string>
     <string name="use_dynamic_colors">Use Dynamic Colors</string>
     <string name="toggle_on_to_use_dyn_colors">Toggle On To Use Dynamic Colors</string>
+    <!--  Title  -->
+    <string name="home_screen_title">Dashboard</string>
+    <string name="favourite_screen_title">Search</string>
+    <string name="settings_screen_title">Settings</string>
 </resources>
