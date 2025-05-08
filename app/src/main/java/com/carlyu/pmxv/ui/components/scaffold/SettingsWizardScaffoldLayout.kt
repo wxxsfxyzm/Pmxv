@@ -50,10 +50,13 @@ import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.uistate.SettingsWizardUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsWizardViewModel
 
-// 在你的ViewModel和UiState文件已经存在的前提下
-
-// SettingsWizardScreen.kt (或者你选择的文件名)
-
+/**
+ * SettingsWizardScaffoldLayout 是一个用于设置向导的布局组件。
+ * 它使用 Jetpack Compose 来构建 UI，并通过 ViewModel 来管理状态。
+ * 该组件包含顶部应用栏、底部导航栏和不同的步骤内容。
+ *
+ * @param viewModel 用于管理设置向导状态的 ViewModel
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun SettingsWizardScaffoldLayout(

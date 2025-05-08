@@ -113,6 +113,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.animation)
+    implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.google.accompanist.pager)
     testImplementation(libs.junit)

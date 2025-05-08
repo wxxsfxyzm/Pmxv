@@ -26,7 +26,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+/**
+ * SettingsViewModel 是一个 ViewModel 类，用于管理设置界面的状态和逻辑。
+ * 它使用 Jetpack Compose 和 Hilt 进行依赖注入。
+ * ViewModel 负责处理用户的设置操作，并与 DataStore 进行交互以保存和���载设置。
+ *
+ * @param context 应用程序上下文
+ * @param dataStore 用于存储和检索用户设置的 DataStore 实例
+ */
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
