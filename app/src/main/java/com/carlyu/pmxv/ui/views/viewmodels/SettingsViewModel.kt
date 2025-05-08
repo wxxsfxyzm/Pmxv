@@ -2,6 +2,7 @@ package com.carlyu.pmxv.ui.views.viewmodels
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -177,10 +178,11 @@ class SettingsViewModel @Inject constructor(
         return try {
             ThemeStyleType.valueOf(value ?: ThemeStyleType.FOLLOW_SYSTEM.toString())
         } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
+            Log.e("parseTheme:IllegalArgumentException", e.printStackTrace().toString())
             // 处理无效主题字符串
             ThemeStyleType.FOLLOW_SYSTEM
         } catch (e: NullPointerException) {
+            Log.e("parseTheme:NullPointerException", e.printStackTrace().toString())
             // 处理空值情况
             ThemeStyleType.FOLLOW_SYSTEM
         }

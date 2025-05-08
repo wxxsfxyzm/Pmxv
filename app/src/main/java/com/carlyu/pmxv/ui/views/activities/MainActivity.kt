@@ -26,6 +26,11 @@ import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsWizardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * MainActivity 是应用的主活动，负责显示应用的主要界面。
+ * 它使用 Jetpack Compose 来构建 UI，并通过 Hilt 进行依赖注入。
+ * 在创建时，它会加载系统设置和向导状态，并根据这些状态决定显示哪个界面。
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
