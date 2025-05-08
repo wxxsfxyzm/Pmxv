@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.pmxv.models.data.ThemeStyleType
 import com.carlyu.pmxv.ui.theme.PmxvTheme
-import com.carlyu.pmxv.ui.views.screens.AboutPageScreen
+import com.carlyu.pmxv.ui.views.screens.mainViewScreen.AboutPageScreen
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint

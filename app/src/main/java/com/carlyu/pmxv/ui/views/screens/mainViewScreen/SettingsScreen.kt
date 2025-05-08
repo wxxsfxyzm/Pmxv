@@ -1,5 +1,6 @@
-package com.carlyu.pmxv.ui.views.screens
+package com.carlyu.pmxv.ui.views.screens.mainViewScreen
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +20,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.carlyu.pmxv.R
 import com.carlyu.pmxv.models.data.BottomSheetContent
-import com.carlyu.pmxv.ui.components.AppIcons
-import com.carlyu.pmxv.ui.components.SettingsItemSwitch
-import com.carlyu.pmxv.ui.components.SettingsNormalItems
-import com.carlyu.pmxv.ui.components.ThemeStyleSection
+import com.carlyu.pmxv.ui.components.icons.AppIcons
+import com.carlyu.pmxv.ui.components.preferences.SettingsItemSwitch
+import com.carlyu.pmxv.ui.components.preferences.SettingsNormalItems
+import com.carlyu.pmxv.ui.components.preferences.ThemeStyleSection
 import com.carlyu.pmxv.ui.views.activities.AboutPageActivity
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
@@ -74,7 +77,7 @@ private fun ErrorState(message: String) {
 private fun SuccessState(
     state: SettingsUiState.Success,
     settingsViewModel: SettingsViewModel,
-    context: android.content.Context
+    context: Context
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
@@ -99,15 +102,15 @@ private fun AccountSection(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Account",
+            text = stringResource(R.string.account),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(16.dp)
         )
         SettingsNormalItems(
             icon = Icons.Default.AccountCircle,
-            title = "账号注销",
-            subtitle = "logout",
+            title = stringResource(R.string.account_logout),
+            subtitle = stringResource(R.string.logout),
             onClick = { settingsViewModel.onLogoutClicked() }
         )
     }
@@ -120,29 +123,29 @@ private fun SwitchItemsSection(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Switch Items",
+            text = stringResource(id = R.string.switch_items),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(16.dp)
         )
         SettingsItemSwitch(
             icon = Icons.Default.Settings,
-            title = "Test Switch 1",
-            subtitle = "This is a test switch",
+            title = stringResource(R.string.test_switch_1),
+            subtitle = stringResource(R.string.this_is_a_test_switch),
             checked = state.switchState1,
             onCheckedChange = settingsViewModel::onSwitchChange1
         )
         SettingsItemSwitch(
             icon = Icons.Default.Settings,
-            title = "Test Switch 2",
-            subtitle = "This is a test switch",
+            title = stringResource(R.string.test_switch_2),
+            subtitle = stringResource(R.string.this_is_a_test_switch),
             checked = state.switchState2,
             onCheckedChange = settingsViewModel::onSwitchChange2
         )
         SettingsItemSwitch(
             icon = AppIcons.Settings,
-            title = "Test Switch 3",
-            subtitle = "This is a test switch",
+            title = stringResource(R.string.test_switch_3),
+            subtitle = stringResource(R.string.this_is_a_test_switch),
             checked = state.switchState3,
             onCheckedChange = settingsViewModel::onSwitchChange3
         )
@@ -156,15 +159,15 @@ private fun DisplaySection(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "UI Display",
+            text = stringResource(R.string.use_dynamic_colors),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(16.dp)
         )
         SettingsItemSwitch(
             icon = AppIcons.Palette,
-            title = "Use Dynamic Colors",
-            subtitle = "Toggle On To Use Dynamic Colors",
+            title = stringResource(R.string.use_dynamic_colors),
+            subtitle = stringResource(R.string.toggle_on_to_use_dyn_colors),
             checked = state.useDynamicColor,
             onCheckedChange = settingsViewModel::toggleDynamicColor
         )
@@ -179,7 +182,7 @@ private fun DisplaySection(
 
 @Composable
 private fun OtherSection(
-    context: android.content.Context,
+    context: Context,
     settingsViewModel: SettingsViewModel
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {

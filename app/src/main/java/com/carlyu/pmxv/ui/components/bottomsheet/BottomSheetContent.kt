@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.ui.components
+package com.carlyu.pmxv.ui.components.bottomsheet
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

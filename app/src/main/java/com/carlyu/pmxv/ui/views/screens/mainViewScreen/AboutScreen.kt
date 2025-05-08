@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.ui.views.screens
+package com.carlyu.pmxv.ui.views.screens.mainViewScreen
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.carlyu.pmxv.ui.components.AppIcons.AutoMirroredArrowBack
+import com.carlyu.pmxv.ui.components.icons.AppIcons.AutoMirroredArrowBack
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

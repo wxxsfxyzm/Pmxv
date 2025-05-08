@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.ui.views.screens
+package com.carlyu.pmxv.ui.views.screens.mainViewScreen
 
 import android.content.Intent
 import androidx.compose.foundation.clickable
@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlyu.pmxv.models.entity.ChatListSingleInstance
-import com.carlyu.pmxv.ui.views.activities.ChatActivity
 import com.carlyu.pmxv.ui.views.uistate.ChatListUiState
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -48,7 +47,13 @@ fun ChatMessageList(uiState: ChatListUiState) {
         LazyColumn {
             items(uiState.messages) { message ->
                 ChatMessageItem(message = message, onClick = {
-                    context.startActivity(Intent(context, ChatActivity::class.java))
+                    context.startActivity(
+                        Intent(
+                            context,
+                            //ChatActivity::class.java
+                            TODO("Implement Activity")
+                        )
+                    )
                 })
             }
         }

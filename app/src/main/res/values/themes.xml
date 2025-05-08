@@ -4,11 +4,17 @@
     <style name="Theme.Pmxv" parent="Theme.Material3.DayNight" />
 
 
-    <style name="Theme.Pmxv.MySplash" parent="Theme.SplashScreen">
+    <style name="Theme.Pmxv.SplashScreen" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">#FFD0BCFF</item>
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+         animated drawable. One of these is required. -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <!--        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>-->
+        <!-- Required for animated icons -->
         <item name="android:windowSplashScreenAnimationDuration">500</item>
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required. -->
+        <item name="postSplashScreenTheme">@style/Theme.Pmxv</item>
     </style>
 
 </resources>

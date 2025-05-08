@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.ui.components
+package com.carlyu.pmxv.ui.components.icons
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack

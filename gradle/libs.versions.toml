@@ -1,6 +1,6 @@
 [versions]
 accompanistPagerVersion = "0.20.0"
-agp = "8.9.2"
+agp = "8.10.0"
 animation = "1.8.0"
 converterGsonVersion = "2.9.0"
 coreSplashscreenVersion = "1.0.1"
