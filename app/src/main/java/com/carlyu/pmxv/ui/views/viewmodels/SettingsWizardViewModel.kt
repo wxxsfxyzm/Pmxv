@@ -20,6 +20,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * SettingsWizardViewModel 是设置向导的 ViewModel，负责管理向导的状态和逻辑。
+ * 它使用 DataStore 来存储和读取用户的设置和向导状态。
+ *
+ * @param dataStore 用于存储用户设置的 DataStore 实例
+ */
 @HiltViewModel
 class SettingsWizardViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>

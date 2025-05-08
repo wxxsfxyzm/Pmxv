@@ -19,6 +19,10 @@ import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * AboutPageActivity 是应用的关于页面活动，负责显示应用的关于信息。
+ * 它使用 Jetpack Compose 来构建 UI，并通过 Hilt 进行依赖注入。
+ */
 @AndroidEntryPoint
 class AboutPageActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

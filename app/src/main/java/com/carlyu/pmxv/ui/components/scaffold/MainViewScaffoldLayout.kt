@@ -1,9 +1,5 @@
 package com.carlyu.pmxv.ui.components.scaffold
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -11,11 +7,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
@@ -36,31 +30,31 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.carlyu.pmxv.R
 import com.carlyu.pmxv.models.data.BottomSheetContent
 import com.carlyu.pmxv.ui.components.bottomsheet.BottomSheetCheckUpdateContent
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.navigation.Screen
+import com.carlyu.pmxv.ui.views.navigation.bottomNavScreens
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.HomeScreen
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.PreferenceScreen
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
-
-val bottomNavScreens = listOf(
-    Screen.HomeScreen, Screen.Favourite, Screen.Settings
-)
 
 /**
  * 主界面布局
@@ -71,11 +65,16 @@ val bottomNavScreens = listOf(
 fun MainViewScaffoldLayout(
     viewModel: SettingsViewModel
 ) {
-    val context = LocalContext.current
+    // val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val currentScreen = remember { mutableStateOf<Screen>(Screen.HomeScreen) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val currentScreen = bottomNavScreens.find { it.route == currentDestination?.route }
+        ?: Screen.HomeScreen // Default to HomeScreen if no match (e.g., during init)
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -88,7 +87,7 @@ fun MainViewScaffoldLayout(
                 ),
                 title = {
                     Text(
-                        when (currentScreen.value) {
+                        when (currentScreen) {
                             Screen.HomeScreen -> stringResource(id = R.string.home_screen_title)
                             Screen.Favourite -> stringResource(id = R.string.favourite_screen_title)
                             Screen.Settings -> stringResource(id = R.string.settings_screen_title)
@@ -99,65 +98,16 @@ fun MainViewScaffoldLayout(
         },
         bottomBar = {
             BottomBar(
-                currentScreen = currentScreen.value,
-                onScreenSelected = { selectedScreen -> // 更新上一个屏幕索引
-                    // 只有当屏幕确实改变时才更新currentScreen，以避免不必要的重组
-                    if (currentScreen.value != selectedScreen) {
-                        currentScreen.value = selectedScreen
-                    }
-                }
+                navController = navController,
+                currentDestination = currentDestination
             )
         }
     ) { paddingValues ->
-        AnimatedContent(
-            targetState = currentScreen.value,
-            modifier = Modifier.padding(paddingValues),
-            transitionSpec = {
-                // 使用 Screen.index 直接获取索引 (initialState 是切换前的屏幕, targetState 是切换后的屏幕)
-                val currentIdx = targetState.index
-                val previousIdx = initialState.index
-
-                val enterTransition: EnterTransition
-                val exitTransition: ExitTransition
-
-                if (currentIdx > previousIdx) { // 向右滑动 (新屏幕在旧屏幕右边)
-                    enterTransition = slideInHorizontally(
-                        initialOffsetX = { fullWidth -> fullWidth },
-                        animationSpec = tween(300)
-                    ) + fadeIn(animationSpec = tween(300))
-                    exitTransition = slideOutHorizontally(
-                        targetOffsetX = { fullWidth -> -fullWidth },
-                        animationSpec = tween(300)
-                    ) + fadeOut(animationSpec = tween(300))
-                } else if (currentIdx < previousIdx) { // 向左滑动 (新屏幕在旧屏幕左边)
-                    enterTransition = slideInHorizontally(
-                        initialOffsetX = { fullWidth -> -fullWidth },
-                        animationSpec = tween(300)
-                    ) + fadeIn(animationSpec = tween(300))
-                    exitTransition = slideOutHorizontally(
-                        targetOffsetX = { fullWidth -> fullWidth },
-                        animationSpec = tween(300)
-                    ) + fadeOut(animationSpec = tween(300))
-                } else { // 相同屏幕或初始加载 (可以简化为淡入淡出)
-                    enterTransition = fadeIn(animationSpec = tween(200))
-                    exitTransition = fadeOut(animationSpec = tween(200))
-                }
-                enterTransition togetherWith exitTransition using SizeTransform(clip = false)
-            },
-            label = "ScreenTransition"
-        ) { targetScreen ->
-            when (targetScreen) {
-                Screen.HomeScreen -> HomeScreen()
-                Screen.Favourite -> {
-                    // TODO("middle Screen")
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("收藏页面 (开发中)")
-                    }
-                }
-
-                Screen.Settings -> PreferenceScreen(settingsViewModel = viewModel)
-            }
-        }
+        AppNavHost(
+            navController = navController,
+            viewModel = viewModel,
+            modifier = Modifier.padding(paddingValues)
+        )
         // 统一处理BottomSheet状态
         // Bottom Sheet 逻辑应该在Scaffold层级，或者确保其z-index更高
         // 当前它在Scaffold的content lambda的最后，所以它会绘制在screens之上。
@@ -165,7 +115,7 @@ fun MainViewScaffoldLayout(
             val successState = uiState as SettingsUiState.Success
             if (successState.bottomSheetVisible) {
                 ModalBottomSheet(
-                    modifier = Modifier.fillMaxHeight(0.9f), // 避免完全填充，留出一点顶部空间
+                    //modifier = Modifier.fillMaxHeight(0.9f), // 避免完全填充，留出一点顶部空间
                     contentWindowInsets = { WindowInsets.systemBars }, // 使用 systemBars 通常是更安全的选择
                     onDismissRequest = { viewModel.dismissBottomSheet() },
                     sheetState = sheetState,
@@ -199,25 +149,138 @@ fun MainViewScaffoldLayout(
     }
 }
 
+@Composable
+fun AppNavHost(
+    navController: NavHostController,
+    viewModel: SettingsViewModel,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.HomeScreen.route, // Set your start destination
+        modifier = modifier
+    ) {
+        bottomNavScreens.forEach { screen ->
+            composable(
+                route = screen.route,
+                enterTransition = {
+                    val initialIdx =
+                        bottomNavScreens.indexOfFirst { it.route == initialState.destination.route }
+                    val targetIdx =
+                        bottomNavScreens.indexOfFirst { it.route == targetState.destination.route }
+
+                    // If target index is greater than initial index, the new screen comes from the right
+                    if (targetIdx > initialIdx) {
+                        slideInHorizontally(
+                            initialOffsetX = { fullWidth -> fullWidth },
+                            animationSpec = tween(300)
+                        ) +
+                                fadeIn(animationSpec = tween(300))
+                    }
+                    // If target index is less than initial index, the new screen comes from the left
+                    else if (targetIdx < initialIdx) {
+                        slideInHorizontally(
+                            initialOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(300)
+                        ) +
+                                fadeIn(animationSpec = tween(300))
+                    }
+                    // If indices are the same (e.g., initial load or navigating back to the same destination), just fade in
+                    else {
+                        fadeIn(animationSpec = tween(200))
+                    }
+                },
+                exitTransition = {
+                    // initialState.destination is the destination that is exiting
+                    // targetState.destination is the destination that is entering
+                    val initialIdx =
+                        bottomNavScreens.indexOfFirst { it.route == initialState.destination.route } // Screen exiting
+                    val targetIdx =
+                        bottomNavScreens.indexOfFirst { it.route == targetState.destination.route }   // Screen entering
+
+                    // If the entering screen's index is greater than the exiting screen's index (moving right overall)
+                    // The exiting screen slides out to the left
+                    if (targetIdx > initialIdx) {
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(300)
+                        ) +
+                                fadeOut(animationSpec = tween(300))
+                    }
+                    // If the entering screen's index is less than the exiting screen's index (moving left overall)
+                    // The exiting screen slides out to the right
+                    else if (targetIdx < initialIdx) {
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> fullWidth },
+                            animationSpec = tween(300)
+                        ) +
+                                fadeOut(animationSpec = tween(300))
+                    }
+                    // If indices are the same, just fade out
+                    else {
+                        fadeOut(animationSpec = tween(200))
+                    }
+                },
+                // Pop transitions are for when you use the back button.
+                // With your current popUpTo(inclusive = true) logic, the back stack is cleared,
+                // so hitting back from a main screen exits the app, and these pop transitions mostly aren't used for *main* screen navigation.
+                // If you had deeper navigation and used back, you'd define popEnter/popExit.
+                // For symmetrical animation on back:
+                // popEnterTransition = { targetState.destination.route.let { targetRoute ->
+                //    val targetIdx = bottomNavScreens.indexOfFirst { it.route == targetRoute }
+                //    if (targetIdx > initialState.destination.route?.let { bottomNavScreens.indexOfFirst { s -> s.route == it } } ?: -1) {
+                //        slideInHorizontally(initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)) + fadeIn(animationSpec = tween(300))
+                //    } else {
+                //        slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)) + fadeIn(animationSpec = tween(300))
+                //    }
+                // }},
+                // popExitTransition = { initialState.destination.route.let { initialRoute ->
+                //     val initialIdx = bottomNavScreens.indexOfFirst { it.route == initialRoute }
+                //     if (targetState.destination.route?.let { bottomNavScreens.indexOfFirst { s -> s.route == it } } ?: -1 > initialIdx) {
+                //         slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)) + fadeOut(animationSpec = tween(300))
+                //     } else {
+                //         slideOutHorizontally(targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)) + fadeOut(animationSpec = tween(300))
+                //     }
+                // }}
+            ) {
+                // Content for each screen
+                when (screen) {
+                    Screen.HomeScreen -> HomeScreen()
+                    Screen.Favourite -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("收藏页面 (Jetpack Navigation)") // Updated text for clarity after migration
+                        }
+                    }
+
+                    Screen.Settings -> PreferenceScreen(settingsViewModel = viewModel)
+                }
+            }
+        }
+    }
+}
+
+
 /**
  * 底部导航栏
- * @param currentScreen 当前屏幕
- * @param onScreenSelected 选中屏幕的回调
+ * @param navController NavHostController for navigation
+ * @param currentDestination Current NavDestination to determine selection
  */
 @Composable
 private fun BottomBar(
-    currentScreen: Screen,
-    onScreenSelected: (Screen) -> Unit
+    navController: NavHostController,
+    currentDestination: androidx.navigation.NavDestination?
 ) {
     NavigationBar {
         bottomNavScreens.forEach { screen ->
-            val selected = currentScreen == screen
+            val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
             val animatedOffsetY by animateDpAsState(
-                targetValue = if (selected) (-4).dp else 0.dp, // 抬高 4 dp
+                targetValue = if (selected) (-4).dp else 0.dp,
                 animationSpec = tween(durationMillis = 200),
                 label = "NavItemOffset"
             )
-            // 选中时稍微放大图标和文字，增加视觉反馈
             val animatedIconSize by animateDpAsState(
                 targetValue = if (selected) 26.dp else 24.dp,
                 animationSpec = tween(200),
@@ -228,13 +291,21 @@ private fun BottomBar(
                 animationSpec = tween(200),
                 label = "NavItemLabelScale"
             )
+
             NavigationBarItem(
                 modifier = Modifier
-                    .offset(y = animatedOffsetY) // 应用Y轴偏移
-                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)), // 给抬起部分一点圆角
+                    .offset(y = animatedOffsetY)
+                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
                 label = {
                     Text(
-                        text = screen.title,
+                        // text = screen.title, // Consider using stringResource if title is dynamic
+                        text = stringResource(
+                            id = when (screen) { // Example using stringResource
+                                Screen.HomeScreen -> R.string.home // Define these in strings.xml
+                                Screen.Favourite -> R.string.favourite
+                                Screen.Settings -> R.string.settings
+                            }
+                        ),
                         modifier = Modifier.graphicsLayer(
                             scaleX = animatedLabelScale,
                             scaleY = animatedLabelScale
@@ -248,21 +319,99 @@ private fun BottomBar(
                         modifier = Modifier.size(animatedIconSize)
                     )
                 },
-                selected = selected, // 选中状态
-                onClick = { if (!selected) onScreenSelected(screen) }, // 只有在未选中时才触发，避免不必要的动画重置
-                alwaysShowLabel = true, // 始终显示标签
+                selected = selected,
+                onClick = {
+                    if (!selected) {
+                        // Navigate using the screen's route
+                        navController.navigate(screen.route) {
+                            // Pop up to the entire graph's root, effectively clearing the back stack for main screens
+                            popUpTo(navController.graph.id) {
+                                inclusive = true // Include the start destination itself
+                            }
+                            // Avoid building a stack of identical destinations when reselecting
+                            launchSingleTop = true
+                            // Not strictly needed with inclusive = true unless you handle savedState elsewhere
+                            // restoreState = true
+                        }
+                    }
+                },
+                alwaysShowLabel = true,
             )
         }
     }
 }
 
-@Preview(showBackground = true, name = "BottomBar Selected Settings Preview")
+@Preview(name = "BottomBar Preview", showBackground = true)
 @Composable
-fun BottomBarPreview() { // Renamed for clarity, showing one state
+fun BottomBarPreview() {
     PmxvTheme(darkTheme = false, dynamicColor = true) {
-        BottomBar(
-            currentScreen = Screen.Settings, // 确保 Screen.Settings 存在且有 index
-            onScreenSelected = {}
-        )
+        // BottomBar 需要 NavController 和 currentDestination
+        // 对于复杂的预览，这可能有点棘手，通常会使用库或更高级的预览技术
+        // 但对于基本外观，可以传递 null 或模拟值，尽管功能不完整
+        // val navController = rememberNavController() // 仅用于满足参数要求
+        // 模拟一个当前目的地
+        // val navBackStackEntry by navController.currentBackStackEntryAsState() // 这在Preview中可能不会很好地工作
+        // 更简单的方法是直接传递一个模拟的 NavDestination
+
+        // 简单的做法是直接调用，并接受它在预览中可能功能不全
+        // BottomBar(navController = navController, currentDestination = null)
+        // 或者
+        // BottomBar(navController = navController, currentDestination = navController.currentDestination)
+
+        // 更可控的预览 (但仍旧不完全模拟导航状态):
+        // 为了让某个项目被选中，我们需要模拟 currentDestination
+        // 这部分比较复杂，因为 NavDestination 通常由导航库管理。
+        // 对于 BottomBar 的纯视觉预览，可能只需关注其在不同选中状态下的外观。
+        // 简单示例（注意：这不会有实际的导航行为）
+        NavigationBar {
+            // 直接创建几个 NavigationBarItem 来预览它们的外观
+            val homeSelected = true
+            val favSelected = false
+
+            val animatedOffsetYHome by animateDpAsState(
+                targetValue = if (homeSelected) (-4).dp else 0.dp,
+                label = ""
+            )
+            val animatedIconSizeHome by animateDpAsState(
+                targetValue = if (homeSelected) 26.dp else 24.dp,
+                label = ""
+            )
+            NavigationBarItem(
+                selected = homeSelected,
+                onClick = { /*TODO*/ },
+                modifier = Modifier.offset(y = animatedOffsetYHome),
+                icon = {
+                    Icon(
+                        Screen.HomeScreen.icon,
+                        contentDescription = "Home",
+                        modifier = Modifier.size(animatedIconSizeHome)
+                    )
+                },
+                label = { Text(stringResource(id = R.string.home)) }
+            )
+
+            val animatedOffsetYFav by animateDpAsState(
+                targetValue = if (favSelected) (-4).dp else 0.dp,
+                label = ""
+            )
+            val animatedIconSizeFav by animateDpAsState(
+                targetValue = if (favSelected) 26.dp else 24.dp,
+                label = ""
+            )
+            NavigationBarItem(
+                selected = favSelected,
+                onClick = { /*TODO*/ },
+                modifier = Modifier.offset(y = animatedOffsetYFav),
+                icon = {
+                    Icon(
+                        Screen.Favourite.icon,
+                        contentDescription = "Favourite",
+                        modifier = Modifier.size(animatedIconSizeFav)
+                    )
+                },
+                label = { Text(stringResource(id = R.string.favourite)) }
+            )
+            // ... etc for other items
+        }
     }
 }
