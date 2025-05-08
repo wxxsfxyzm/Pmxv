@@ -1,4 +1,28 @@
 <resources>
+    <!--  App Main  -->
     <string name="app_name">Pmxv</string>
     <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="messages">Messages</string>
+    <string name="friends">Friends</string>
+    <string name="groups">Groups</string>
+    <string name="events">Events</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <!--  Settings  -->
+    <string name="account">Account</string>
+    <string name="account_logout">Account Logout</string>
+    <string name="switch_items">Switch Items</string>
+    <string name="test_switch_1">Test Switch 1</string>
+    <string name="test_switch_2">Test Switch 2</string>
+    <string name="test_switch_3">Test Switch 3</string>
+    <string name="this_is_a_test_switch">This is a test switch</string>
+    <string name="ui_display">UI Display</string>
+    <string name="use_dynamic_colors">Use Dynamic Colors</string>
+    <string name="toggle_on_to_use_dyn_colors">Toggle On To Use Dynamic Colors</string>
 </resources>

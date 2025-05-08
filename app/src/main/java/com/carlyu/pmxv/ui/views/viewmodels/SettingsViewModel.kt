@@ -12,7 +12,6 @@ import com.carlyu.pmxv.R
 import com.carlyu.pmxv.local.datastore.PreferencesKeys
 import com.carlyu.pmxv.models.data.BottomSheetContent
 import com.carlyu.pmxv.models.data.ThemeStyleType
-import com.carlyu.pmxv.ui.views.activities.LoginActivity
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,20 +35,7 @@ class SettingsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<SettingsUiState>(SettingsUiState.Loading)
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
-    /*    // BottomSheet
-        val bottomSheetState = mutableStateOf(false)
-        val bottomSheetContent = mutableStateOf<BottomSheetContent?>(null)*/
-
     val finishActivity = MutableLiveData<Boolean>()
-
-    /*    // switchValue
-        val switchState1 = mutableStateOf(sharedPreferences.getBoolean("switch_state_1", false))
-        val switchState2 = mutableStateOf(sharedPreferences.getBoolean("switch_state_2", false))
-        val switchState3 = mutableStateOf(sharedPreferences.getBoolean("switch_state_3", false))
-
-        // UI Control Variables
-        val uiMode = mutableStateOf(getThemeSetting()) // 添加这一行
-        val useDynamicColor = mutableStateOf(sharedPreferences.getBoolean("dynamic_color", false))*/
 
     init {
         viewModelScope.launch {
@@ -75,9 +61,11 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             dataStore.edit { preferences ->
                 preferences[PreferencesKeys.IS_LOGGED_IN] = false
+                // Caution: This will reset the wizard state
+                preferences[PreferencesKeys.IS_WIZARD_COMPLETED] = false
             }
             context.startActivity(
-                Intent(context, LoginActivity::class.java)
+                Intent(context, TODO("Implement Login Activity"))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
             finishActivity.postValue(true)

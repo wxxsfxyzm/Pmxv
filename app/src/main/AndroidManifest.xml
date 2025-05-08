@@ -22,7 +22,7 @@
             android:exported="true"
             android:enableOnBackInvokedCallback="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:theme="@style/Theme.Pmxv.MySplash">
+            android:theme="@style/Theme.Pmxv.SplashScreen">
 
         </activity>
         <activity
@@ -38,11 +38,6 @@
         </activity>
         <activity
             android:name=".ui.views.activities.AboutPageActivity"
-            android:exported="false"
-            android:label="@string/about"
-            android:theme="@style/Theme.Pmxv" />
-        <activity
-            android:name=".ui.views.activities.LoginActivity"
             android:exported="false"
             android:label="@string/about"
             android:theme="@style/Theme.Pmxv" />

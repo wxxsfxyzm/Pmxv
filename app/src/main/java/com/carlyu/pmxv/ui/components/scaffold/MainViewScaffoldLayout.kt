@@ -1,6 +1,5 @@
-package com.carlyu.pmxv.ui.components
+package com.carlyu.pmxv.ui.components.scaffold
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,26 +23,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.carlyu.pmxv.R
 import com.carlyu.pmxv.models.data.BottomSheetContent
+import com.carlyu.pmxv.ui.components.bottomsheet.BottomSheetCheckUpdateContent
+import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.navigation.Screen
-import com.carlyu.pmxv.ui.views.screens.FavouriteScreen
-import com.carlyu.pmxv.ui.views.screens.HomeScreen
-import com.carlyu.pmxv.ui.views.screens.PreferenceScreen
+import com.carlyu.pmxv.ui.views.screens.mainViewScreen.HomeScreen
+import com.carlyu.pmxv.ui.views.screens.mainViewScreen.PreferenceScreen
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldLayout() {
+fun MainViewScaffoldLayout(
+    viewModel: SettingsViewModel
+) {
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val currentScreen = remember { mutableStateOf<Screen>(Screen.HomeScreen) }
-    val settingsViewModel: SettingsViewModel = hiltViewModel()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    val uiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -55,7 +57,7 @@ fun ScaffoldLayout() {
                     titleContentColor = MaterialTheme.colorScheme.onBackground,
                 ),
                 title = {
-                    Text("Pmxv")
+                    Text(stringResource(id = R.string.app_name))
                 },
             )
         },
@@ -69,11 +71,10 @@ fun ScaffoldLayout() {
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            // navigationGraph.Create()
             when (currentScreen.value) {
                 Screen.HomeScreen -> HomeScreen()
-                Screen.Favourite -> FavouriteScreen()
-                Screen.Settings -> PreferenceScreen(settingsViewModel = settingsViewModel)
+                Screen.Favourite -> TODO("middle Screen")//FavouriteScreen()
+                Screen.Settings -> PreferenceScreen(settingsViewModel = viewModel)
             }
         }
         // 统一处理BottomSheet状态
@@ -85,23 +86,14 @@ fun ScaffoldLayout() {
                         modifier = Modifier.fillMaxHeight(),
                         contentWindowInsets = { WindowInsets.systemBars },
                         //containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                        onDismissRequest = { settingsViewModel.dismissBottomSheet() },
+                        onDismissRequest = { viewModel.dismissBottomSheet() },
                         scrimColor = MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f),
                         sheetState = sheetState,
                     ) {
-/*                        val view = LocalView.current
-                        (view.parent as? DialogWindowProvider)?.window?.let { window ->
-                            SideEffect {
-                                WindowCompat.getInsetsController(
-                                    window,
-                                    view
-                                ).isAppearanceLightStatusBars = false
-                            }
-                        }*/
                         when (val content = successState.bottomSheetContent) {
                             is BottomSheetContent.CheckUpdates ->
                                 BottomSheetCheckUpdateContent(
-                                    settingsViewModel = settingsViewModel,
+                                    settingsViewModel = viewModel,
                                     content = content
                                 )
 
@@ -117,12 +109,6 @@ fun ScaffoldLayout() {
             else -> Unit
         }
 
-    }
-}
-
-private fun ComponentActivity.setStatusBarAppearance(isLight: Boolean) {
-    WindowCompat.getInsetsController(window, window.decorView).apply {
-        isAppearanceLightStatusBars = isLight
     }
 }
 
@@ -147,5 +133,16 @@ private fun BottomBar(
                 onClick = { onScreenSelected(screen) }
             )
         }
+    }
+}
+
+@Preview(showBackground = true, name = "All Set Step Preview")
+@Composable
+fun BottomBarPreview(){
+    PmxvTheme(darkTheme = false, dynamicColor = true){
+        BottomBar(
+            currentScreen = Screen.Settings,
+            onScreenSelected = {}
+        )
     }
 }
