@@ -9,13 +9,11 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,12 +44,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.carlyu.pmxv.R
-import com.carlyu.pmxv.models.data.BottomSheetContent
+import com.carlyu.pmxv.models.data.view.BottomSheetContentType
 import com.carlyu.pmxv.ui.components.bottomsheet.BottomSheetCheckUpdateContent
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.navigation.Screen
 import com.carlyu.pmxv.ui.views.navigation.bottomNavScreens
-import com.carlyu.pmxv.ui.views.screens.mainViewScreen.HomeScreen
+import com.carlyu.pmxv.ui.views.screens.dashboardScreen.DashboardScreen
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.PreferenceScreen
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
@@ -74,7 +72,7 @@ fun MainViewScaffoldLayout(
     val currentDestination = navBackStackEntry?.destination
 
     val currentScreen = bottomNavScreens.find { it.route == currentDestination?.route }
-        ?: Screen.HomeScreen // Default to HomeScreen if no match (e.g., during init)
+        ?: Screen.DashboardScreen // 如果没有匹配项（例如，在初始化期间），则默认显示主屏幕。
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -87,11 +85,8 @@ fun MainViewScaffoldLayout(
                 ),
                 title = {
                     Text(
-                        when (currentScreen) {
-                            Screen.HomeScreen -> stringResource(id = R.string.home_screen_title)
-                            Screen.Favourite -> stringResource(id = R.string.favourite_screen_title)
-                            Screen.Settings -> stringResource(id = R.string.settings_screen_title)
-                        }
+                        text =
+                            stringResource(id = currentScreen.title)
                     )
                 },
             )
@@ -115,23 +110,22 @@ fun MainViewScaffoldLayout(
             val successState = uiState as SettingsUiState.Success
             if (successState.bottomSheetVisible) {
                 ModalBottomSheet(
-                    //modifier = Modifier.fillMaxHeight(0.9f), // 避免完全填充，留出一点顶部空间
-                    contentWindowInsets = { WindowInsets.systemBars }, // 使用 systemBars 通常是更安全的选择
+                    modifier = Modifier.fillMaxHeight(), // 可扩展至状态栏
                     onDismissRequest = { viewModel.dismissBottomSheet() },
                     sheetState = sheetState,
                     // containerColor = MaterialTheme.colorScheme.surfaceContainerLow, // 可以尝试不同的surface颜色
                     scrimColor = MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f),
                 ) {
                     // Column确保内容从顶部开始，并且可以在底部留出导航栏空间（如果需要）
-                    Column(Modifier.navigationBarsPadding()) {
+                    Column() {
                         when (val content = successState.bottomSheetContent) {
-                            is BottomSheetContent.CheckUpdates ->
+                            is BottomSheetContentType.CheckUpdates ->
                                 BottomSheetCheckUpdateContent(
                                     settingsViewModel = viewModel,
                                     content = content
                                 )
 
-                            is BottomSheetContent.Confirmation -> {
+                            is BottomSheetContentType.Confirmation -> {
                                 // Column(Modifier.padding(16.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                                 //     Text("确认操作示例", style = MaterialTheme.typography.titleLarge)
                                 //     Spacer(Modifier.height(16.dp))
@@ -157,7 +151,7 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeScreen.route, // Set your start destination
+        startDestination = Screen.DashboardScreen.route, // Set your start destination
         modifier = modifier
     ) {
         bottomNavScreens.forEach { screen ->
@@ -245,7 +239,7 @@ fun AppNavHost(
             ) {
                 // Content for each screen
                 when (screen) {
-                    Screen.HomeScreen -> HomeScreen()
+                    Screen.DashboardScreen -> DashboardScreen()
                     Screen.Favourite -> {
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -277,7 +271,7 @@ private fun BottomBar(
         bottomNavScreens.forEach { screen ->
             val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
             val animatedOffsetY by animateDpAsState(
-                targetValue = if (selected) (-4).dp else 0.dp,
+                targetValue = if (selected) (-2).dp else 0.dp,
                 animationSpec = tween(durationMillis = 200),
                 label = "NavItemOffset"
             )
@@ -301,8 +295,8 @@ private fun BottomBar(
                         // text = screen.title, // Consider using stringResource if title is dynamic
                         text = stringResource(
                             id = when (screen) { // Example using stringResource
-                                Screen.HomeScreen -> R.string.home // Define these in strings.xml
-                                Screen.Favourite -> R.string.favourite
+                                Screen.DashboardScreen -> R.string.dashboard // Define these in strings.xml
+                                Screen.Favourite -> R.string.management
                                 Screen.Settings -> R.string.settings
                             }
                         ),
@@ -315,7 +309,7 @@ private fun BottomBar(
                 icon = {
                     Icon(
                         imageVector = screen.icon,
-                        contentDescription = screen.title,
+                        contentDescription = stringResource(id = screen.title),
                         modifier = Modifier.size(animatedIconSize)
                     )
                 },
@@ -382,7 +376,7 @@ fun BottomBarPreview() {
                 modifier = Modifier.offset(y = animatedOffsetYHome),
                 icon = {
                     Icon(
-                        Screen.HomeScreen.icon,
+                        Screen.DashboardScreen.icon,
                         contentDescription = "Home",
                         modifier = Modifier.size(animatedIconSizeHome)
                     )

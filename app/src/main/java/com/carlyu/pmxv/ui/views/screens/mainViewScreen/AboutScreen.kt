@@ -18,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.carlyu.pmxv.R
 import com.carlyu.pmxv.ui.components.icons.AppIcons.AutoMirroredArrowBack
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,10 +33,13 @@ fun AboutPageScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About") },
+                title = { Text(text = stringResource(R.string.about)) },
                 navigationIcon = {
                     IconButton(onClick = { (context as ComponentActivity).finish() }) {
-                        Icon(AutoMirroredArrowBack, contentDescription = "Back")
+                        Icon(
+                            AutoMirroredArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
                     }
                 }
             )
@@ -53,7 +58,7 @@ fun AboutPageContent(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "About This App",
+            text = stringResource(R.string.about_screen_title),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )

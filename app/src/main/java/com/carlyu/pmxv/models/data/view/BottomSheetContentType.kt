@@ -1,17 +1,17 @@
-package com.carlyu.pmxv.models.data
+package com.carlyu.pmxv.models.data.view
 
-sealed class BottomSheetContent {
+sealed class BottomSheetContentType {
     // 通用检查更新类型
     data class CheckUpdates(
         val title: String = "Check Updates",
         val description: String = "Under Development\nFor Test Purposes Only"
-    ) : BottomSheetContent()
+    ) : BottomSheetContentType()
 
     // 其他场景示例
     data class Confirmation(
         val title: String,
         val message: String
-    ) : BottomSheetContent()
+    ) : BottomSheetContentType()
 
     // 添加更多场景...
 }

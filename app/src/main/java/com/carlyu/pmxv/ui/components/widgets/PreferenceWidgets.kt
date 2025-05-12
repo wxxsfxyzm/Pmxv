@@ -1,4 +1,4 @@
-package com.carlyu.pmxv.ui.components.preferences
+package com.carlyu.pmxv.ui.components.widgets
 
 
 import android.os.VibrationEffect
@@ -32,10 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.carlyu.pmxv.models.data.ThemeStyleType
+import com.carlyu.pmxv.R
+import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.components.icons.AppIcons
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 
@@ -78,7 +80,6 @@ fun SettingsNormalItemsWithDialogRadioButton(
     val context = LocalContext.current
     val vibrator = context.getSystemService(Vibrator::class.java)
     val showDialog = remember { mutableStateOf(false) }
-    //val selectedOption = remember { mutableStateOf(0) }
 
     if (showDialog.value) {
         Dialog(
@@ -200,7 +201,7 @@ fun ThemeStyleSection(
                 modifier = Modifier
             )
         },
-        headlineContent = { Text("Dark Mode") },
+        headlineContent = { Text(stringResource(R.string.dark_mode)) },
         supportingContent = {
             Column(modifier = modifier) {
                 Row(
@@ -214,7 +215,7 @@ fun ThemeStyleSection(
                             if (themeStyle != ThemeStyleType.LIGHT)
                                 changeThemeStyle(ThemeStyleType.LIGHT)
                         },
-                        label = { Text(text = "Light") },
+                        label = { Text(text = stringResource(R.string.dark_mode_light)) },
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier.size(size = AssistChipDefaults.IconSize),
@@ -230,7 +231,7 @@ fun ThemeStyleSection(
                             if (themeStyle != ThemeStyleType.DARK)
                                 changeThemeStyle(ThemeStyleType.DARK)
                         },
-                        label = { Text("Dark") },
+                        label = { Text(stringResource(R.string.dark_mode_dark)) },
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier.size(size = AssistChipDefaults.IconSize),
@@ -247,7 +248,7 @@ fun ThemeStyleSection(
                         if (themeStyle != ThemeStyleType.FOLLOW_SYSTEM)
                             changeThemeStyle(ThemeStyleType.FOLLOW_SYSTEM)
                     },
-                    label = { Text("Follow System") },
+                    label = { Text(text = stringResource(R.string.dark_mode_system)) },
                     leadingIcon = {
                         Icon(
                             modifier = Modifier.size(size = AssistChipDefaults.IconSize),

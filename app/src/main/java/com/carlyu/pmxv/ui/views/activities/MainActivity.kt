@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlyu.pmxv.models.data.ThemeStyleType
+import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.components.scaffold.MainViewScaffoldLayout
 import com.carlyu.pmxv.ui.components.scaffold.SettingsWizardScaffoldLayout
 import com.carlyu.pmxv.ui.theme.PmxvTheme

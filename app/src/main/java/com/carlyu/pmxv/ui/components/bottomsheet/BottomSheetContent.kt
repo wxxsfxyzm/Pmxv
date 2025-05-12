@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.carlyu.pmxv.models.data.BottomSheetContent
+import com.carlyu.pmxv.models.data.view.BottomSheetContentType
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import kotlinx.coroutines.launch
 
@@ -22,15 +22,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun BottomSheetCheckUpdateContent(
     settingsViewModel: SettingsViewModel,
-    content: BottomSheetContent
+    content: BottomSheetContentType
 ) {
 
     when (content) {
-        is BottomSheetContent.CheckUpdates -> {
+        is BottomSheetContentType.CheckUpdates -> {
             RealCheckUpdateContent(settingsViewModel, content)
         }
 
-        is BottomSheetContent.Confirmation -> {
+        is BottomSheetContentType.Confirmation -> {
             ConfirmationContent(settingsViewModel, content)
         }
         // 处理其他类型...
@@ -41,7 +41,7 @@ fun BottomSheetCheckUpdateContent(
 @Composable
 private fun RealCheckUpdateContent(
     settingsViewModel: SettingsViewModel,
-    content: BottomSheetContent.CheckUpdates
+    content: BottomSheetContentType.CheckUpdates
 ) {
     val scope = rememberCoroutineScope()
 
@@ -175,7 +175,7 @@ private fun RealCheckUpdateContent(
 @Composable
 private fun ConfirmationContent(
     settingsViewModel: SettingsViewModel,
-    content: BottomSheetContent.Confirmation
+    content: BottomSheetContentType.Confirmation
 ) {
     // 实现确认对话框的内容...
 }

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -59,6 +60,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("Boolean", "TRUST_SELF_SIGNED_CERTS_FOR_DEBUG", "true")
         }
 
         getByName("release") {
@@ -68,6 +70,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("Boolean", "TRUST_SELF_SIGNED_CERTS_FOR_DEBUG", "false")
         }
     }
 
@@ -79,6 +82,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -123,7 +127,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
+    // Optional - Material Design 3
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.core)
     // Optional - Add full set of material icons
@@ -140,14 +144,19 @@ dependencies {
     // Retrofit 2
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.urlconnection)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit2.ktx.serialization.converter)
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.androidCompiler)
-
     implementation(libs.hilt.extCompose)
     ksp(libs.hilt.extCompiler)
 
+    // pve-api
     implementation(libs.cv4pve.api)
 
     // Room
@@ -155,4 +164,11 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
 
+    // kotlinx
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+
+    // log
+    implementation(libs.timber)
 }

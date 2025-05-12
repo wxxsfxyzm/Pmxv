@@ -1,7 +1,7 @@
 package com.carlyu.pmxv.ui.views.uistate
 
-import com.carlyu.pmxv.models.data.BottomSheetContent
-import com.carlyu.pmxv.models.data.ThemeStyleType
+import com.carlyu.pmxv.models.data.view.BottomSheetContentType
+import com.carlyu.pmxv.models.data.view.ThemeStyleType
 
 sealed class SettingsUiState {
     object Loading : SettingsUiState()
@@ -16,7 +16,7 @@ sealed class SettingsUiState {
         // BottomSheet状态
         // BottomSheet 状态
         val bottomSheetVisible: Boolean = false,
-        val bottomSheetContent: BottomSheetContent? = null
+        val bottomSheetContent: BottomSheetContentType? = null
 
     ) : SettingsUiState()
 

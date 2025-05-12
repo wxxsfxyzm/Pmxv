@@ -12,7 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.carlyu.pmxv.models.data.ThemeStyleType
+import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.AboutPageScreen
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState

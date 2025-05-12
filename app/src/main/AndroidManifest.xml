@@ -18,17 +18,10 @@
         android:name=".PmxvApplication"
         android:theme="@style/Theme.Pmxv">
         <activity
-            android:name=".ui.views.activities.SplashActivity"
-            android:exported="true"
-            android:enableOnBackInvokedCallback="true"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:theme="@style/Theme.Pmxv.SplashScreen">
-
-        </activity>
-        <activity
             android:name=".ui.views.activities.MainActivity"
             android:exported="true"
             android:enableOnBackInvokedCallback="true"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:theme="@style/Theme.Pmxv">
             <intent-filter>
