@@ -1,18 +1,36 @@
 package com.carlyu.pmxv.modules
 
+import android.content.Context
+import com.carlyu.pmxv.local.room.AppDatabase
+import com.carlyu.pmxv.local.room.dao.AccountDao
+import com.carlyu.pmxv.local.room.repository.AccountRepository
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-/*
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-    // 数据库实例（稍后定义）
+
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "pmxv.db"
-        ).build()
+        return AppDatabase.getInstance(context)
     }
-}*/
+
+    @Provides
+    @Singleton
+    fun provideAccountDao(appDatabase: AppDatabase): AccountDao {
+        return appDatabase.accountDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(accountDao: AccountDao): AccountRepository {
+        return AccountRepository(accountDao)
+    }
+}

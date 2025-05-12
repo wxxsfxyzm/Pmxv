@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlyu.pmxv.R
 import com.carlyu.pmxv.local.datastore.PreferencesKeys
-import com.carlyu.pmxv.models.data.BottomSheetContent
-import com.carlyu.pmxv.models.data.ThemeStyleType
+import com.carlyu.pmxv.models.data.view.BottomSheetContentType
+import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +29,7 @@ import javax.inject.Inject
 /**
  * SettingsViewModel 是一个 ViewModel 类，用于管理设置界面的状态和逻辑。
  * 它使用 Jetpack Compose 和 Hilt 进行依赖注入。
- * ViewModel 负责处理用户的设置操作，并与 DataStore 进行交互以保存和���载设置。
+ * ViewModel 负责处理用户的设置操作，并与 DataStore 进行交互以保存和加载设置。
  *
  * @param context 应用程序上下文
  * @param dataStore 用于存储和检索用户设置的 DataStore 实例
@@ -127,7 +127,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun showBottomSheet(content: BottomSheetContent) {
+    fun showBottomSheet(content: BottomSheetContentType) {
         viewModelScope.launch {
             // 更新 UI 状态
             _uiState.update { currentState ->

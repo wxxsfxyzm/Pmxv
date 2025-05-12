@@ -10,7 +10,11 @@ object PreferencesKeys {
     val IS_WIZARD_COMPLETED = booleanPreferencesKey("is_wizard_completed")
     val IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
 
+    // setup wizard
+    val TRUST_SELF_SIGNED_CERTS = booleanPreferencesKey("trust_self_signed_certs")
+
     // 用户设置
+    // 主题
     val THEME = stringPreferencesKey("theme")
     val DYNAMIC_COLOR = booleanPreferencesKey("dynamic_color")
     val SWITCH_STATE_1 = booleanPreferencesKey("switch_state_1")

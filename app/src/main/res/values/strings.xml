@@ -4,6 +4,7 @@
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="home">Home</string>
+    <string name="management">Management</string>
     <string name="favourite">Fav</string>
     <string name="search">Search</string>
     <string name="profile">Profile</string>
@@ -15,6 +16,18 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="logout">Logout</string>
+    <!--  Settings Wizard  -->
+    <string name="welcome">Welcome</string>
+    <string name="login_account">Login Account</string>
+    <string name="setup_complete">Setup Complete</string>
+    <string name="setup_wizard">Setup Wizard</string>
+    <string name="setup_completed">Completed</string>
+    <string name="setup_login_hint">Log in to your Proxmox Server</string>
+    <string name="setup_login_username">Username</string>
+    <string name="setup_login_password">Password (At least 6 chars)</string>
+    <string name="setup_all_set">All Set!</string>
+    <string name="setup_welcome_message">This wizard will guide you through the initial setup of your application. Please click "Next" to continue.</string>
+    <string name="setup_complete_message">Your app has been set up successfully. Click "Done" to start using.</string>
     <!--  Settings  -->
     <string name="account">Account</string>
     <string name="account_logout">Account Logout</string>
@@ -24,10 +37,19 @@
     <string name="test_switch_3">Test Switch 3</string>
     <string name="this_is_a_test_switch">This is a test switch</string>
     <string name="ui_display">UI Display</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_light">Light</string>
+    <string name="dark_mode_dark">Dark</string>
+    <string name="dark_mode_system">Follow System</string>
     <string name="use_dynamic_colors">Use Dynamic Colors</string>
     <string name="toggle_on_to_use_dyn_colors">Toggle On To Use Dynamic Colors</string>
     <!--  Title  -->
-    <string name="home_screen_title">Dashboard</string>
-    <string name="favourite_screen_title">Search</string>
+    <string name="management_screen_title">Management</string>
     <string name="settings_screen_title">Settings</string>
+    <string name="about_screen_title">About Pmxv</string>
+    <!--  Controls  -->
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="dashboard_screen_title">Dashboard</string>
+    <string name="dashboard">Dashboard</string>
 </resources>

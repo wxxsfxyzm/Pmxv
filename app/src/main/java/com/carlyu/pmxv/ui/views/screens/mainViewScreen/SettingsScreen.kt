@@ -24,11 +24,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlyu.pmxv.R
-import com.carlyu.pmxv.models.data.BottomSheetContent
+import com.carlyu.pmxv.models.data.view.BottomSheetContentType
 import com.carlyu.pmxv.ui.components.icons.AppIcons
-import com.carlyu.pmxv.ui.components.preferences.SettingsItemSwitch
-import com.carlyu.pmxv.ui.components.preferences.SettingsNormalItems
-import com.carlyu.pmxv.ui.components.preferences.ThemeStyleSection
+import com.carlyu.pmxv.ui.components.widgets.SettingsItemSwitch
+import com.carlyu.pmxv.ui.components.widgets.SettingsNormalItems
+import com.carlyu.pmxv.ui.components.widgets.ThemeStyleSection
 import com.carlyu.pmxv.ui.views.activities.AboutPageActivity
 import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
@@ -207,7 +207,7 @@ private fun OtherSection(
             subtitle = "Get the latest version of the app",
             onClick = {
                 settingsViewModel.showBottomSheet(
-                    BottomSheetContent.CheckUpdates(
+                    BottomSheetContentType.CheckUpdates(
                         title = "版本检查",
                         description = "正在检测新版本..."
                     )
@@ -219,7 +219,7 @@ private fun OtherSection(
 
 @Composable
 private fun CustomBottomSheet(
-    content: BottomSheetContent?,
+    content: BottomSheetContentType?,
     onDismiss: () -> Unit
 ) {
     // 实现具体的 BottomSheet UI
