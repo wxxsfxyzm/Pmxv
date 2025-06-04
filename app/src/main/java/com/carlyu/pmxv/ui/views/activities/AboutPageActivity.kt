@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.theme.PmxvTheme
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.AboutPageScreen
-import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,8 +33,8 @@ class AboutPageActivity : ComponentActivity() {
             val uiState by settingsViewModel.uiState.collectAsState()
             // 监听设置状态变化
             val (isDarkTheme, dynamicColor) = when (uiState) {
-                is SettingsUiState.Success -> {
-                    val successState = uiState as SettingsUiState.Success
+                is SettingsState.Success -> {
+                    val successState = uiState as SettingsState.Success
                     Pair(
                         when (successState.uiMode) {
                             ThemeStyleType.LIGHT -> false
@@ -45,8 +45,8 @@ class AboutPageActivity : ComponentActivity() {
                     )
                 }
 
-                SettingsUiState.Loading,
-                is SettingsUiState.Error -> {
+                SettingsState.Loading,
+                is SettingsState.Error -> {
                     // 加载中和错误状态使用系统默认
                     Pair(isSystemInDarkTheme(), false)
                 }

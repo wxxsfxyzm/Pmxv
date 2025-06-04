@@ -2,7 +2,7 @@ package com.carlyu.pmxv.ui.views.uistate
 
 import com.carlyu.pmxv.models.data.proxmox.PVEAuthenticationMethod
 
-data class SettingsWizardUiState(
+data class SettingsWizardState(
     val currentStep: Int = 0,
     val apiLoginForm: ProxmoxApiLoginForm = ProxmoxApiLoginForm(),
     val pamLoginForm: ProxmoxPamLoginForm = ProxmoxPamLoginForm(),

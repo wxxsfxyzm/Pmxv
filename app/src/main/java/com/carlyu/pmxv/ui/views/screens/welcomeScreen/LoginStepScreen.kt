@@ -26,13 +26,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.carlyu.pmxv.ui.views.uistate.SettingsWizardUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsWizardState
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginStepScreen(
     modifier: Modifier = Modifier,
-    apiLoginForm: SettingsWizardUiState.ProxmoxApiLoginForm,
+    apiLoginForm: SettingsWizardState.ProxmoxApiLoginForm,
     onServerAddressChange: (String) -> Unit,
     onNodeNameChange: (String) -> Unit,
     onApiTokenIdChange: (String) -> Unit,

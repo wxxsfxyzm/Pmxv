@@ -51,7 +51,7 @@ import com.carlyu.pmxv.ui.views.navigation.Screen
 import com.carlyu.pmxv.ui.views.navigation.bottomNavScreens
 import com.carlyu.pmxv.ui.views.screens.dashboardScreen.DashboardScreen
 import com.carlyu.pmxv.ui.views.screens.mainViewScreen.PreferenceScreen
-import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 
 /**
@@ -106,8 +106,8 @@ fun MainViewScaffoldLayout(
         // 统一处理BottomSheet状态
         // Bottom Sheet 逻辑应该在Scaffold层级，或者确保其z-index更高
         // 当前它在Scaffold的content lambda的最后，所以它会绘制在screens之上。
-        if (uiState is SettingsUiState.Success) {
-            val successState = uiState as SettingsUiState.Success
+        if (uiState is SettingsState.Success) {
+            val successState = uiState as SettingsState.Success
             if (successState.bottomSheetVisible) {
                 ModalBottomSheet(
                     modifier = Modifier.fillMaxHeight(), // 可扩展至状态栏

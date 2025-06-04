@@ -13,7 +13,7 @@ import com.carlyu.pmxv.R
 import com.carlyu.pmxv.local.datastore.PreferencesKeys
 import com.carlyu.pmxv.models.data.view.BottomSheetContentType
 import com.carlyu.pmxv.models.data.view.ThemeStyleType
-import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsState
 import com.carlyu.pmxv.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -40,8 +40,8 @@ class SettingsViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
     // UI State
-    private val _uiState = MutableStateFlow<SettingsUiState>(SettingsUiState.Loading)
-    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<SettingsState>(SettingsState.Loading)
+    val uiState: StateFlow<SettingsState> = _uiState.asStateFlow()
 
     val finishActivity = MutableLiveData<Boolean>()
 
@@ -49,7 +49,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val preferences = dataStore.data.first()
-                _uiState.value = SettingsUiState.Success(
+                _uiState.value = SettingsState.Success(
                     switchState1 = preferences[PreferencesKeys.SWITCH_STATE_1] == true,
                     switchState2 = preferences[PreferencesKeys.SWITCH_STATE_2] == true,
                     switchState3 = preferences[PreferencesKeys.SWITCH_STATE_3] == true,
@@ -59,7 +59,7 @@ class SettingsViewModel @Inject constructor(
                     bottomSheetContent = null
                 )
             } catch (e: Exception) {
-                _uiState.value = SettingsUiState.Error("初始化失败: ${e.message}")
+                _uiState.value = SettingsState.Error("初始化失败: ${e.message}")
             }
         }
         observePreferences()
@@ -131,7 +131,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             // 更新 UI 状态
             _uiState.update { currentState ->
-                if (currentState is SettingsUiState.Success) {
+                if (currentState is SettingsState.Success) {
                     currentState.copy(
                         bottomSheetVisible = true,
                         bottomSheetContent = content
@@ -146,7 +146,7 @@ class SettingsViewModel @Inject constructor(
     fun dismissBottomSheet() {
         viewModelScope.launch {
             _uiState.update { currentState ->
-                if (currentState is SettingsUiState.Success) {
+                if (currentState is SettingsState.Success) {
                     currentState.copy(
                         bottomSheetVisible = false,
                         bottomSheetContent = null
@@ -162,12 +162,12 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             dataStore.data
                 .catch { e ->
-                    _uiState.value = SettingsUiState.Error("数据加载失败: ${e.message}")
+                    _uiState.value = SettingsState.Error("数据加载失败: ${e.message}")
                 }
                 .collect { preferences ->
-                    val currentState = _uiState.value as? SettingsUiState.Success
+                    val currentState = _uiState.value as? SettingsState.Success
 
-                    _uiState.value = SettingsUiState.Success(
+                    _uiState.value = SettingsState.Success(
                         switchState1 = preferences[PreferencesKeys.SWITCH_STATE_1] == true,
                         switchState2 = preferences[PreferencesKeys.SWITCH_STATE_2] == true,
                         switchState3 = preferences[PreferencesKeys.SWITCH_STATE_3] == true,

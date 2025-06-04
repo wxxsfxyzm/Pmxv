@@ -21,7 +21,7 @@ import com.carlyu.pmxv.models.data.view.ThemeStyleType
 import com.carlyu.pmxv.ui.components.scaffold.MainViewScaffoldLayout
 import com.carlyu.pmxv.ui.components.scaffold.SettingsWizardScaffoldLayout
 import com.carlyu.pmxv.ui.theme.PmxvTheme
-import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsWizardViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,9 +63,9 @@ class MainActivity : ComponentActivity() {
 
             // 监听设置状态变化
             val (isDarkTheme, dynamicColor) = when (settingsUiState) {
-                is SettingsUiState.Success -> {
+                is SettingsState.Success -> {
                     systemSettingsUiReady = true
-                    val successState = settingsUiState as SettingsUiState.Success
+                    val successState = settingsUiState as SettingsState.Success
                     Pair(
                         when (successState.uiMode) {
                             ThemeStyleType.LIGHT -> false
@@ -76,12 +76,12 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                is SettingsUiState.Error -> {
+                is SettingsState.Error -> {
                     systemSettingsUiReady = true // 出错也认为加载结束，可以移除 Splash Screen
                     Pair(isSystemInDarkTheme(), false) // 或者提供特定的错误状态主题
                 }
 
-                is SettingsUiState.Loading -> {
+                is SettingsState.Loading -> {
                     systemSettingsUiReady = false // 仍在加载，Splash Screen 继续显示
                     // 在 Loading 状态下，PmxvTheme 会使用下面的默认值，
                     // 但因为 Splash Screen 还在显示，用户不会看到这个中间状态。

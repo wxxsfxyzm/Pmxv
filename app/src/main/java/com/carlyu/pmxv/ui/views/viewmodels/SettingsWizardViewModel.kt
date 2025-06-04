@@ -11,7 +11,7 @@ import com.carlyu.pmxv.local.room.repository.AccountRepository
 import com.carlyu.pmxv.models.data.proxmox.PVEAuthenticationMethod
 import com.carlyu.pmxv.models.entity.SettingsWizardNavigationAction
 import com.carlyu.pmxv.remote.api.ProxmoxApiProvider
-import com.carlyu.pmxv.ui.views.uistate.SettingsWizardUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsWizardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -43,8 +43,8 @@ class SettingsWizardViewModel @Inject constructor(
     private val proxmoxApiProvider: ProxmoxApiProvider,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SettingsWizardUiState())
-    val uiState: StateFlow<SettingsWizardUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(SettingsWizardState())
+    val uiState: StateFlow<SettingsWizardState> = _uiState.asStateFlow()
 
     // StateFlow 暴露向导是否已完成的状态
     val isWizardCompleted: StateFlow<Boolean> = dataStore.data
@@ -192,7 +192,7 @@ class SettingsWizardViewModel @Inject constructor(
                     username = formData.username,
                     password = formData.password
                 ) // ProxmoxApiService 中需添加此方法
-
+                Timber.i("PAM login response: ${response.code()} - ${response.body()}")
                 if (response.isSuccessful && response.body()?.data != null) {
                     val ticketData = response.body()!!.data!!
                     Timber.i("PAM login successful for account: ${formData.accountName}")
@@ -232,7 +232,8 @@ class SettingsWizardViewModel @Inject constructor(
                     val accountId = accountRepository.addAccount(newAccount)
                     Timber.i("Account '${formData.accountName}' (ID: $accountId) saved.")
 
-                    //markWizardCompleted() // 标记向导完成
+                    // 如果登录成功，调用 loginSuccessful() 方法
+                    loginSuccessful()
 
                 } else {
                     val errorBody = response.errorBody()?.string() ?: response.message()
@@ -390,6 +391,21 @@ class SettingsWizardViewModel @Inject constructor(
             }
 
             else -> true // Other steps are considered valid by default
+        }
+    }
+
+    private fun loginSuccessful() {
+        // 这里可以添加登录成功后的逻辑，比如跳转到主界面或更新 UI 状态
+        Timber.i("Login successful, proceeding to next step.")
+        Timber.i("Current step before login success: ${_uiState.value.currentStep}")
+        if (_uiState.value.currentStep == 1) { // 只有在登录步骤后才允许前进
+            _uiState.update {
+                it.copy(
+                    currentStep = it.currentStep + 1,
+                    isLoading = false,
+                    errorMessage = null
+                )
+            }
         }
     }
 

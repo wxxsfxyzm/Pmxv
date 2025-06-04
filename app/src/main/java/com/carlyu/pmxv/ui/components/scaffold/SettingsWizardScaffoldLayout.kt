@@ -69,7 +69,7 @@ import com.carlyu.pmxv.models.entity.SettingsWizardNavigationAction
 import com.carlyu.pmxv.ui.components.widgets.AuthMethodRadioButton
 import com.carlyu.pmxv.ui.components.widgets.SettingSwitchRow
 import com.carlyu.pmxv.ui.theme.PmxvTheme
-import com.carlyu.pmxv.ui.views.uistate.SettingsWizardUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsWizardState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsWizardViewModel
 import kotlinx.coroutines.launch
 
@@ -291,7 +291,7 @@ fun WelcomeStepScreen(modifier: Modifier = Modifier) {
 @Composable
 fun LoginStepScreen(
     modifier: Modifier = Modifier,
-    formState: SettingsWizardUiState, // 传递相关的状态部分
+    formState: SettingsWizardState, // 传递相关的状态部分
     onUpdateLoginForm: (
         serverAddress: String?, username: String?, password: String?,
         apiTokenId: String?, apiTokenSecret: String?, nodeName: String?,

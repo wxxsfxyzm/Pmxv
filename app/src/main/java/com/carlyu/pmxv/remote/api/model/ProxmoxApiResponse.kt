@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ProxmoxApiResponse<T>(
-    @SerialName("data") val data: T? = null // 数据在某些空响应或部分错误上可能为 null
+    @SerialName("data") val data: T? // 数据在某些空响应或部分错误上可能为 null
     // 注意: Proxmox 的错误响应 (非 2xx) 通常由 Retrofit/OkHttp 处理，
     // 它们的 body 可能是自定义的 JSON，不一定遵循此包装结构。
     // 如果需要，可以添加顶层的 "errors" 或 "warnings" 字段，

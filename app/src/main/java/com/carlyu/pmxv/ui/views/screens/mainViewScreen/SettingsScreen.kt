@@ -30,7 +30,7 @@ import com.carlyu.pmxv.ui.components.widgets.SettingsItemSwitch
 import com.carlyu.pmxv.ui.components.widgets.SettingsNormalItems
 import com.carlyu.pmxv.ui.components.widgets.ThemeStyleSection
 import com.carlyu.pmxv.ui.views.activities.AboutPageActivity
-import com.carlyu.pmxv.ui.views.uistate.SettingsUiState
+import com.carlyu.pmxv.ui.views.uistate.SettingsState
 import com.carlyu.pmxv.ui.views.viewmodels.SettingsViewModel
 
 @Composable
@@ -39,11 +39,11 @@ fun PreferenceScreen(settingsViewModel: SettingsViewModel) {
     val uiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
-        is SettingsUiState.Loading -> LoadingState()
-        is SettingsUiState.Error -> ErrorState(message = state.message)
-        is SettingsUiState.Success -> SuccessState(
+        is SettingsState.Loading -> LoadingState()
+        is SettingsState.Error -> ErrorState(message = state.message)
+        is SettingsState.Success -> SuccessState(
             state = state,
-            settingsViewModel = settingsViewModel,
+            settingsViewModel,
             context = context
         )
     }
@@ -75,7 +75,7 @@ private fun ErrorState(message: String) {
 
 @Composable
 private fun SuccessState(
-    state: SettingsUiState.Success,
+    state: SettingsState.Success,
     settingsViewModel: SettingsViewModel,
     context: Context
 ) {
@@ -97,7 +97,7 @@ private fun SuccessState(
 
 @Composable
 private fun AccountSection(
-    state: SettingsUiState.Success,
+    state: SettingsState.Success,
     settingsViewModel: SettingsViewModel
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -118,7 +118,7 @@ private fun AccountSection(
 
 @Composable
 private fun SwitchItemsSection(
-    state: SettingsUiState.Success,
+    state: SettingsState.Success,
     settingsViewModel: SettingsViewModel
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -154,7 +154,7 @@ private fun SwitchItemsSection(
 
 @Composable
 private fun DisplaySection(
-    state: SettingsUiState.Success,
+    state: SettingsState.Success,
     settingsViewModel: SettingsViewModel
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
